@@ -19,28 +19,28 @@ import shutil
 import sys
 
 DAY_TITLE = "Wednesday 25 November 2026"
-SUBTITLE = "52 STORIES · 10 REGIONS · 21 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026"
+SUBTITLE = "35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026"
 
 UTC_TIMELINE = [
-    ("00:18", "Shenzhou-24 lifts off"),
-    ("00:30", "Australia CPI jumps 4.9%"),
-    ("03:56", "Pakistani docks Tiangong"),
-    ("05:30", "Taiex closes -4.8%"),
-    ("06:30", "Kospi plunges -6.2%"),
-    ("07:00", "UK Ofgem cap +26%"),
-    ("10:15", "SA court voids Farmgate"),
-    ("11:40", "Cairo tanker fire: 30+ dead"),
-    ("13:30", "US Q3 GDP revised 4.3%"),
-    ("15:00", "US tariff plan: 14 economies"),
-    ("21:00", "Wall St closes mixed"),
+    ("00:18", "Shenzhou-24 launch"),
+    ("00:30", "Australia CPI 4.9%"),
+    ("03:56", "Tiangong docking"),
+    ("05:30", "Taiex -4.8%"),
+    ("06:30", "Kospi -6.2%"),
+    ("07:00", "Ofgem cap +26%"),
+    ("10:15", "Farmgate voided"),
+    ("11:40", "Cairo fire 30+ dead"),
+    ("13:30", "US GDP +4.3%"),
+    ("15:00", "US 14-economy tariffs"),
+    ("21:00", "Wall St mixed"),
 ]
 
 TOP_STATS = [
-    ("20%–35%", "US proposed tariffs on EU, China & 12 economies", "#b91c1c"),
-    ("-6.2%", "Kospi chip rout to 4,697.51; SK hynix -11.1%", "#1d4ed8"),
-    ("1st", "Pakistani & foreign astronaut docks at Tiangong", "#047857"),
-    ("+26%", "UK Ofgem energy price cap to £2,166 in Jan", "#b45309"),
-    ("30+ / 9", "Killed in Cairo tanker blast & Java gold pit flood", "#6d28d9"),
+    ("20%–35%", "US tariff plan on EU, China & 12 economies", "#b91c1c"),
+    ("-6.2%", "Kospi chip rout (4,697); SK hynix -11.1%", "#1d4ed8"),
+    ("1st", "Pakistani astronaut docks at China's Tiangong", "#047857"),
+    ("+26%", "UK Ofgem energy cap jumps to £2,166 in Jan", "#b45309"),
+    ("30+ / 9", "Killed in Cairo tanker fire & Java gold pit", "#6d28d9"),
 ]
 
 LEAD_STORIES = [
@@ -50,9 +50,8 @@ LEAD_STORIES = [
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "UP TO 35% · 14 ECONOMIES",
-        "title": "US proposes tariffs up to 35% on EU, China and 12 more economies",
-        "body": "USTR Section 301 notice cites 'excess capacity': up to 20% on China, 15% EU, 25% India and 35% Vietnam, plus 10% on Brazil's Embraer jets. EU 'strongly rejects premise'; Beijing calls it a 'false issue'. Hearings Jan 2027.",
-        "why": "Widest US tariff salvo since spring court ruling; hits top trade partners.",
+        "title": "US proposes tariffs up to 35% on EU, China & 12 more economies",
+        "body": "USTR Section 301 cites excess capacity: up to 35% Vietnam, 25% India, 20% China, 15% EU & 10% Brazil Embraer. EU & Beijing reject claims; hearings Jan 2027.",
         "src": "USTR · Reuters · CNBC",
         "svg": "tariffs",
     },
@@ -63,8 +62,7 @@ LEAD_STORIES = [
         "tag_col": "#1d4ed8",
         "banner": "KOSPI -6.2% · SK HYNIX -11.1%",
         "title": "AI doubts sink Asian chip stocks: Kospi plunges 6.2% below 5,000",
-        "body": "South Korea's Kospi closes down 6.16% at 4,697.51 after an 09:06 sidecar halt; SK hynix drops 11.1% and Samsung 9.9% as banks cut AI targets. Taiwan's Taiex falls 4.8% (TSMC -5.4%) and Japan's Nikkei slides 2.8%.",
-        "why": "Investors question whether hyperscaler AI capex will pay for itself.",
+        "body": "Kospi ends at 4,697.51 after 09:06 sidecar halt; SK hynix -11.1%, Samsung -9.9% on AI capex doubts. Taiwan Taiex -4.8% (TSMC -5.4%), Nikkei -2.8%.",
         "src": "KRX · Yonhap · Reuters",
         "svg": "chips",
     },
@@ -74,9 +72,8 @@ LEAD_STORIES = [
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "SHENZHOU-24 · DOCKED 03:56 UTC",
-        "title": "Pakistan's first astronaut docks at China's Tiangong space station",
-        "body": "Payload specialist Muhammad Zeeshan Ali, 40, a former Pakistan Air Force pilot, launched at 00:18 UTC on Shenzhou-24 with Tang Hongbo and Wu Yi and docked at 03:56 UTC for a 5-to-10-day science mission.",
-        "why": "First foreign astronaut ever hosted aboard China's orbital station.",
+        "title": "Pakistan's first astronaut docks at China's Tiangong station",
+        "body": "Payload specialist Muhammad Zeeshan Ali, 40, launched at 00:18 UTC on Shenzhou-24 with Tang Hongbo & Wu Yi, becoming Tiangong's first foreign astronaut.",
         "src": "CMSA · Xinhua · AP",
         "svg": "space",
     },
@@ -90,19 +87,19 @@ MID_ROW_1 = [
         "tag_col": "#047857",
         "banner": "5 REGIONS · GRID LOSS #17",
         "title": "Russian strikes kill 5, cut power in 5 regions",
-        "body": "Zaporizhzhia nuclear plant runs on backup diesel after 17th grid loss this year; 5 civilians killed across Donetsk and Kherson.",
+        "body": "Zaporizhzhia nuclear plant on diesel after 17th grid loss; 5 killed.",
         "src": "Reuters · Energoatom",
         "svg": "grid",
     },
     {
         "num": 5,
-        "loc": "HODEIDAH · RAS TANURA · WAR",
+        "loc": "RAS TANURA · WAR",
         "tag": "CONFIRMED",
         "tag_col": "#1d4ed8",
-        "banner": "4 DRONES DOWN · PORT HIT",
+        "banner": "4 DRONES DOWN · HODEIDAH",
         "title": "Saudis down Houthi drones after Hodeidah strike",
-        "body": "Coalition destroys 4 explosive drones over Ras Tanura refinery with no casualties after striking Houthi port sites in Hodeidah.",
-        "src": "SPA · Reuters · Al Jazeera",
+        "body": "4 drones destroyed over Ras Tanura refinery after Hodeidah port hit.",
+        "src": "SPA · Reuters",
         "svg": "drones",
     },
     {
@@ -112,8 +109,8 @@ MID_ROW_1 = [
         "tag_col": "#047857",
         "banner": "£1,723 → £2,166 (+26%)",
         "title": "UK energy price cap to jump 26% in January",
-        "body": "Ofgem lifts typical annual household dual-fuel bill from £1,723 to £2,166 starting 1 Jan 2027 amid winter gas supply tightness.",
-        "src": "Ofgem · BBC · Financial Times",
+        "body": "Ofgem lifts typical annual household bill from £1,723 to £2,166.",
+        "src": "Ofgem · BBC · FT",
         "svg": "energy",
     },
     {
@@ -123,7 +120,7 @@ MID_ROW_1 = [
         "tag_col": "#047857",
         "banner": "A$740M · NO FOREIGN BASES",
         "title": "Solomon Islands signs security pact with Australia",
-        "body": "10-year A$740m treaty makes Australia 'primary security partner' and bars foreign military bases without joint consent.",
+        "body": "10-year A$740m treaty makes Australia primary partner; bars bases.",
         "src": "ABC · Reuters",
         "svg": "treaty",
     },
@@ -134,7 +131,7 @@ MID_ROW_1 = [
         "tag_col": "#047857",
         "banner": "TK 12,500 → 17,000 (+36%)",
         "title": "Bangladesh raises garment minimum wage 36%",
-        "body": "Wage board votes 4–2 to lift monthly floor to Tk 17,000 ($139); unions demand Tk 18,000 as 87 plants shut and 108 BGB platoons deploy.",
+        "body": "Board votes 4–2 for Tk 17,000 ($139); unions reject as 87 plants shut.",
         "src": "Daily Star · Reuters",
         "svg": "garment",
     },
@@ -143,12 +140,12 @@ MID_ROW_1 = [
 MID_ROW_2 = [
     {
         "num": 9,
-        "loc": "BOGOR, INDONESIA · DISASTER",
+        "loc": "BOGOR · DISASTER",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "9 DEAD · 17 TRAPPED (100M)",
         "title": "9 dead, 17 trapped in flooded Java gold mine",
-        "body": "Flash flood inundates 100-metre unlicensed gold shafts in West Java; rescuers recover 9 bodies and pump water to reach 17 miners.",
+        "body": "Flash flood fills 100m West Java pit; 9 bodies pulled, 17 sought.",
         "src": "BNPB · Antara · AP",
         "svg": "mine",
     },
@@ -159,7 +156,7 @@ MID_ROW_2 = [
         "tag_col": "#b45309",
         "banner": "SHATI CAMP · SECURITY CHIEF",
         "title": "Israeli strike kills Hamas security chief in Gaza",
-        "body": "Airstrike on al-Shati camp kills Col. Abu al-Awf along with his wife and two daughters; winter rain threatens 1,000 tent sites.",
+        "body": "Col. Abu al-Awf, wife & 2 daughters killed in al-Shati camp strike.",
         "src": "AP · Al Jazeera",
         "svg": "gaza",
     },
@@ -168,9 +165,9 @@ MID_ROW_2 = [
         "loc": "CAPE TOWN · JUSTICE",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
-        "banner": "PHALA PHALA REPORT VOIDED",
+        "banner": "PHALA PHALA VOIDED",
         "title": "Court lifts 'Farmgate' threat to Ramaphosa",
-        "body": "South Africa's Constitutional Court sets aside the 2022 panel report that opened impeachment proceedings against President Ramaphosa.",
+        "body": "Constitutional Court voids 2022 impeachment panel report.",
         "src": "News24 · Reuters",
         "svg": "court",
     },
@@ -181,66 +178,49 @@ MID_ROW_2 = [
         "tag_col": "#1d4ed8",
         "banner": "CASE 4000 · JUDGES WARN",
         "title": "Judges urge rethink of Netanyahu bribery charge",
-        "body": "Trial panel tells prosecutors bribery count faces 'considerable difficulties'; PM says trial must end as Knesset advances Oct 7 bill.",
-        "src": "Haaretz · Times of Israel",
+        "body": "Panel tells prosecutors bribery count faces 'considerable difficulties'.",
+        "src": "Haaretz · Reuters",
         "svg": "gavel",
     },
     {
         "num": 13,
-        "loc": "GIZA, EGYPT · DISASTER",
+        "loc": "GIZA, CAIRO · DISASTER",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "30+ KILLED · 27 CARS BURNED",
         "title": "Fuel tanker fire kills at least 30 near Cairo",
-        "body": "Overturned fuel tanker explodes on Greater Cairo ring road near Giza pyramid corridor, burning 27 vehicles and injuring 18.",
-        "src": "Egypt Health Min · AP · AFP",
+        "body": "Overturned tanker explodes on Greater Cairo ring road; 18 hurt.",
+        "src": "Health Min · AP · AFP",
         "svg": "tanker",
     },
 ]
 
 BRIEFS_COL_1 = [
-    (14, "Hormuz", "Iran IRGC says two tankers hit naval mines on 'unauthorised route'", "CLAIM"),
-    (15, "Samara", "Ukrainian drones set Syzran and Kuibyshev oil refineries ablaze", "CONFIRMED"),
-    (16, "Savasleyka", "Ukraine says drones hit 3 MiG-31s and 2 Su-34s at Russian base", "CLAIM"),
-    (17, "Pyongyang", "North Korea gives Swiss envoy 48 hours to close office and leave", "OFFICIAL"),
-    (18, "Brussels", "EU Commission proposes €50bn sovereign fund for quantum tech", "OFFICIAL"),
-    (19, "London", "MI5 & Cabinet warn UK firms of rising Russian sabotage threat", "OFFICIAL"),
-    (20, "London", "Discount chain Poundland enters administration; 11,000 jobs at risk", "CONFIRMED"),
-    (21, "Kyiv", "Zelensky says Ukraine requires €115bn in external aid for 2027", "OFFICIAL"),
-    (22, "Moscow", "Kremlin declines comment on leaked estimate of 500k–700k war dead", "REPORTED"),
-    (23, "Paris", "Surprise Eurostar staff walkout cancels cross-Channel trains", "CONFIRMED"),
-    (24, "Luxembourg", "EU General Court orders binding timeline on cage-free farming", "OFFICIAL"),
-    (25, "Warsaw", "Poland announces strict drone no-fly buffer zone along Ukraine border", "OFFICIAL"),
-    (26, "The Hague", "41 OPCW states urge Russia to halt riot-control agent use at front", "OFFICIAL"),
-    (27, "Ed Damazin", "RSF drone strikes kill at least 19 civilians in Sudan's Blue Nile", "CONFIRMED"),
-    (28, "Benghazi", "Two Libyan officers die of wounds from drone strike on patrol ship", "REPORTED"),
-    (29, "Dakar", "Senegal FA denies Morocco's claim of improper CAS tribunal contact", "OFFICIAL"),
-    (30, "Harare", "Zimbabwe court issues arrest warrant for Robert Mugabe's son", "OFFICIAL"),
-    (31, "Lagos", "Nigerian police arrest 5 Mexicans, seize $220m in cartel meth lab", "OFFICIAL"),
-    (32, "Abuja", "President Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
-    (33, "Enugu", "Veteran Nigerian Nollywood actor Pete Edochie dies aged 79", "CONFIRMED"),
+    (14, "Hormuz", "Iran IRGC says 2 tankers hit mines on 'unauthorised route'", "CLAIM"),
+    (15, "Samara", "Ukrainian drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
+    (16, "Pyongyang", "North Korea gives Swiss envoy 48h to shut office & leave", "OFFICIAL"),
+    (17, "Brussels", "EU Commission proposes €50bn fund for quantum technology", "OFFICIAL"),
+    (18, "London", "Poundland enters administration; 11,000 UK jobs at risk", "CONFIRMED"),
+    (19, "Kyiv", "Zelensky says Ukraine needs €115bn external aid for 2027", "OFFICIAL"),
+    (20, "Paris", "Surprise Eurostar walkout cancels cross-Channel trains", "CONFIRMED"),
+    (21, "Ed Damazin", "RSF drone strikes kill 19 civilians in Sudan Blue Nile", "CONFIRMED"),
+    (22, "Lagos", "Nigeria police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
+    (23, "Harare", "Zimbabwe court issues arrest warrant for Mugabe's son", "OFFICIAL"),
+    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
-    (34, "New York", "Wall St pares early chip losses: Dow +0.3%, Nasdaq -0.6%; GDP +4.3%", "OFFICIAL"),
-    (35, "Washington", "FCC clears SpaceX request for up to 1 million orbital data nodes", "OFFICIAL"),
-    (36, "Washington", "Contractor breach exposes unclassified CIA facility & personnel data", "REPORTED"),
-    (37, "Iowa", "US Army detonates 10,000 lb of unstable lead azide at munitions plant", "OFFICIAL"),
-    (38, "Mississippi", "Divers recover 6 bodies after twin-engine plane crash in Gulf", "OFFICIAL"),
-    (39, "Cartagena", "Colombian police storm supermarket, free 20 hostages; 1 captor killed", "OFFICIAL"),
-    (40, "Paraná", "Severe storms kill 6 and damage 40 towns across southern Brazil", "OFFICIAL"),
-    (41, "Mexico City", "Mexico formally protests US refusal to extradite ex-TV presenter", "OFFICIAL"),
-    (42, "Sydney", "Australia October CPI inflation jumps to 4.9%, dashing rate-cut hopes", "OFFICIAL"),
-    (43, "Sydney", "Ex-policeman Beau Lamarre-Condon found guilty of Baird & Davies murders", "OFFICIAL"),
-    (44, "Cape York", "Northern Queensland towns hit by 42°C heatwave and water outages", "OFFICIAL"),
-    (45, "Kuala Lumpur", "Malaysia regulator sues Google for RM600m ($146m) over YouTube ads", "OFFICIAL"),
-    (46, "Hong Kong", "URBTIX ticketing breach exposes personal data of 1.3m users", "OFFICIAL"),
-    (47, "Tokyo", "PM Takaichi unveils second extra budget for chip & quake relief", "OFFICIAL"),
-    (48, "Karachi", "Residential building collapse kills at least 3 and injures 14", "CONFIRMED"),
-    (49, "New Delhi", "Court voids CBI and ED inspection order on Gandhi family assets", "OFFICIAL"),
-    (50, "Deep Space", "ESA's Hera probe images stadium-sized crater left by DART impact", "OFFICIAL"),
-    (51, "Lisbon", "UEFA Champions League: Sporting CP draw 2–2 with Manchester United", "OFFICIAL"),
-    (52, "United Nations", "Global 16 Days of Activism against gender-based violence begins", "OFFICIAL"),
+    (25, "New York", "Wall St pares losses: Dow +0.3%, Nasdaq -0.6%; GDP +4.3%", "OFFICIAL"),
+    (26, "Washington", "FCC clears SpaceX plan for 1 million orbital data nodes", "OFFICIAL"),
+    (27, "Iowa", "US Army detonates 10,000 lb of lead azide at ammo plant", "OFFICIAL"),
+    (28, "Cartagena", "Colombia police free 20 supermarket hostages; 1 captor dead", "OFFICIAL"),
+    (29, "Paraná", "Severe storms kill 6 and hit 40 towns in southern Brazil", "OFFICIAL"),
+    (30, "Sydney", "Australia Oct CPI hits 4.9%; ex-cop Lamarre-Condon guilty", "OFFICIAL"),
+    (31, "Kuala Lumpur", "Malaysia sues Google for RM600m ($146m) over YouTube ads", "OFFICIAL"),
+    (32, "Hong Kong", "URBTIX ticketing breach exposes data of 1.3m customers", "OFFICIAL"),
+    (33, "Karachi", "Residential building collapse kills 3 and injures 14", "CONFIRMED"),
+    (34, "Deep Space", "ESA Hera probe images stadium-sized DART asteroid crater", "OFFICIAL"),
+    (35, "Lisbon", "Champions League: Sporting CP draw 2–2 with Man United", "OFFICIAL"),
 ]
 
 
@@ -421,16 +401,16 @@ def build_world_map_svg() -> str:
         (13, 172, 66, "#dc2626"), # Cairo
         (14, 198, 68, "#d97706"), # Hormuz
         (15, 192, 42, "#dc2626"), # Samara
-        (17, 250, 52, "#dc2626"), # Pyongyang
-        (18, 152, 43, "#2563eb"), # Brussels
-        (27, 176, 82, "#dc2626"), # Sudan
-        (31, 152, 84, "#059669"), # Lagos
-        (34, 76, 52, "#2563eb"),  # New York
-        (39, 82, 86, "#059669"),  # Cartagena
-        (40, 98, 114, "#059669"), # Parana Brazil
-        (42, 268, 122, "#0284c7"),# Sydney
-        (45, 234, 86, "#059669"), # Kuala Lumpur
-        (48, 208, 68, "#d97706"), # Karachi
+        (16, 250, 52, "#dc2626"), # Pyongyang
+        (17, 152, 43, "#2563eb"), # Brussels
+        (21, 176, 82, "#dc2626"), # Sudan
+        (22, 152, 84, "#059669"), # Lagos
+        (25, 76, 52, "#2563eb"),  # New York
+        (28, 82, 86, "#059669"),  # Cartagena
+        (29, 98, 114, "#059669"), # Parana Brazil
+        (30, 268, 122, "#0284c7"),# Sydney
+        (31, 234, 86, "#059669"), # Kuala Lumpur
+        (33, 208, 68, "#d97706"), # Karachi
     ]
     pin_els = []
     for num, x, y, col in pins:
@@ -488,7 +468,6 @@ def build_broadsheet_html() -> str:
           {svg_scene(s['svg'], s['banner'])}
           <div class="lead-title">{s['title']}</div>
           <div class="lead-body">{s['body']}</div>
-          <div class="lead-why"><b>WHY IT MATTERS:</b> {s['why']}</div>
           <div class="card-src">Sources: {s['src']}</div>
         </div>
         """)
@@ -517,9 +496,9 @@ def build_broadsheet_html() -> str:
             tcol = "#047857" if tag == "OFFICIAL" else ("#1d4ed8" if tag == "CONFIRMED" else ("#b45309" if tag == "REPORTED" else "#7c3aed"))
             rows.append(
                 f'<div class="brief-row">'
-                f'<span class="b-num">{num}</span>'
+                f'<span class="b-left"><span class="b-num">{num}</span>'
                 f'<span class="b-city">{city}</span> '
-                f'<span class="b-txt">{txt}</span>'
+                f'<span class="b-txt">{txt}</span></span>'
                 f'<span class="b-tag" style="color:{tcol}">[{tag}]</span>'
                 f'</div>'
             )
@@ -621,27 +600,23 @@ def build_broadsheet_html() -> str:
     position: relative; width: 100%; border-radius: 3px; overflow: hidden;
     border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
   }}
-  .lead-card .scene-svg {{ width: 100%; height: 84px; display: block; }}
-  .mid-card .scene-svg {{ width: 100%; height: 52px; display: block; }}
+  .lead-card .scene-svg {{ width: 100%; height: 102px; display: block; }}
+  .mid-card .scene-svg {{ width: 100%; height: 62px; display: block; }}
   .scene-banner {{
     position: absolute; bottom: 0; right: 0;
-    background: rgba(15, 23, 42, 0.9); color: #fef08a;
-    font-size: 7.4px; font-weight: 900; padding: 1px 5px;
-    border-top-left-radius: 3px; letter-spacing: 0.2px;
+    background: rgba(15, 23, 42, 0.92); color: #fef08a;
+    font-size: 8.2px; font-weight: 900; padding: 1.5px 6px;
+    border-top-left-radius: 3px; letter-spacing: 0.25px;
   }}
   .lead-title {{
     font-family: 'Liberation Serif', Georgia, serif;
-    font-size: 14px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1.5px;
+    font-size: 15.2px; font-weight: 900; line-height: 1.12; color: #0f172a; margin-bottom: 2px;
   }}
   .lead-body {{
-    font-size: 8.1px; line-height: 1.22; color: #334155; font-weight: 500; margin-bottom: 1.5px;
-  }}
-  .lead-why {{
-    font-size: 7.4px; line-height: 1.15; background: #fef3c7; color: #78350f;
-    padding: 2px 4px; border-radius: 2.5px; border-left: 2.5px solid #d97706; margin-bottom: 1.5px;
+    font-size: 9.2px; line-height: 1.24; color: #1e293b; font-weight: 600; margin-bottom: 2px;
   }}
   .card-src {{
-    font-size: 6.8px; font-weight: 700; color: #64748b; text-transform: uppercase;
+    font-size: 7.4px; font-weight: 800; color: #475569; text-transform: uppercase;
   }}
 
   /* MID ROWS (5 COLS x 2) */
@@ -650,13 +625,13 @@ def build_broadsheet_html() -> str:
   }}
   .mid-title {{
     font-family: 'Liberation Serif', Georgia, serif;
-    font-size: 10.6px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1px;
+    font-size: 11.4px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1.5px;
   }}
   .mid-body {{
-    font-size: 7.4px; line-height: 1.18; color: #334155; font-weight: 500; margin-bottom: 1px;
+    font-size: 8.2px; line-height: 1.16; color: #1e293b; font-weight: 600; margin-bottom: 1.5px;
   }}
 
-  /* BOTTOM SECTION: MAP + 39 WIRES */
+  /* BOTTOM SECTION: MAP + 22 WIRES */
   .bottom-grid {{
     display: grid; grid-template-columns: 292px 1fr; gap: 5px; min-height: 0; overflow: hidden;
   }}
@@ -666,30 +641,33 @@ def build_broadsheet_html() -> str:
     min-width: 0; min-height: 0; overflow: hidden;
   }}
   .box-head {{
-    font-size: 7.8px; font-weight: 900; color: #141d33; text-transform: uppercase;
-    letter-spacing: 0.4px; border-bottom: 1.5px solid #141d33; padding-bottom: 1px; margin-bottom: 2px;
+    font-size: 8.4px; font-weight: 900; color: #141d33; text-transform: uppercase;
+    letter-spacing: 0.4px; border-bottom: 1.5px solid #141d33; padding-bottom: 1.5px; margin-bottom: 3px;
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }}
-  .map-svg {{ width: 100%; height: 156px; display: block; border: 1px solid #d6cfc0; border-radius: 3px; }}
+  .map-svg {{ width: 100%; height: 152px; display: block; border: 1px solid #d6cfc0; border-radius: 3px; }}
   .region-legend {{
-    font-size: 6.8px; line-height: 1.22; color: #334155; font-weight: 700; margin-top: 2px;
+    font-size: 7.3px; line-height: 1.25; color: #1e293b; font-weight: 700; margin-top: 2px;
   }}
   .wires-cols {{
-    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
   }}
   .brief-col {{
     display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
   }}
   .brief-row {{
-    font-size: 7.1px; line-height: 1.05; height: 9.8px; color: #1f2937;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 7.75px; line-height: 1.25; height: 15.5px; color: #0f172a;
+    white-space: nowrap; overflow: hidden;
+    border-bottom: 1px dotted #e2e8f0;
+    display: flex; align-items: center; justify-content: space-between;
   }}
+  .b-left {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
   .b-num {{
-    display: inline-block; width: 13px; font-weight: 900; color: #b91c1c;
+    display: inline-block; width: 14px; font-weight: 900; color: #b91c1c;
   }}
-  .b-city {{ font-weight: 800; color: #0f172a; }}
-  .b-txt {{ font-weight: 500; color: #334155; }}
-  .b-tag {{ font-size: 6.2px; font-weight: 800; margin-left: 2px; }}
+  .b-city {{ font-weight: 900; color: #0f172a; }}
+  .b-txt {{ font-weight: 600; color: #1e293b; }}
+  .b-tag {{ font-size: 6.8px; font-weight: 900; margin-left: 3px; flex-shrink: 0; }}
 
   /* FOOTER DATE CHECK */
   .date-check {{
@@ -711,7 +689,7 @@ def build_broadsheet_html() -> str:
 <div class="page">
   <div class="masthead">
     <div class="mast-top">
-      <span>THE WORLD IN ONE DAY — 52 STORIES · 10 REGIONS · 21 FIELDS · ALL FIRST REPORTED WEDNESDAY 25 NOVEMBER 2026</span>
+      <span>THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED WEDNESDAY 25 NOVEMBER 2026</span>
       <span>13 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP · DATE CHECK</span>
     </div>
     <div class="mast-mid">
@@ -719,8 +697,8 @@ def build_broadsheet_html() -> str:
       <div class="mast-sub">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+</div>
     </div>
     <div class="mast-bot">
-      <span>10 REGIONS: Europe 11 · N.America 8 · E/SE Asia 6 · MidEast 6 · S.Asia 5 · Sub-Sahara 5 · LatAm 4 · N.Africa 3 · Oceania 3 · Space 2</span>
-      <span>21 FIELDS: War 9 · Disaster 5 · Justice 5 · Markets 5 · Diplomacy 4 · Trade 3 · Tech 3 · Space 3 · Energy 2 · Labour 2 · Other 11</span>
+      <span>10 REGIONS: Europe 7 · N.America 4 · E/SE Asia 4 · MidEast 4 · S.Asia 3 · Sub-Sahara 4 · LatAm 3 · N.Africa 2 · Oceania 2 · Space 2</span>
+      <span>18 FIELDS: War 6 · Disaster 4 · Justice 4 · Markets 3 · Diplomacy 3 · Trade 2 · Tech 2 · Space 2 · Energy 2 · Labour 2 · Other 5</span>
     </div>
   </div>
 
@@ -741,20 +719,20 @@ def build_broadsheet_html() -> str:
     <div class="map-box">
       <div class="box-head">
         <span>WHERE IT HAPPENED</span>
-        <span style="color:#b91c1c">PINS 1–52</span>
+        <span style="color:#b91c1c">PINS 1–35</span>
       </div>
       {build_world_map_svg()}
       <div class="region-legend">
-        <div>● <b>N. &amp; Lat. America (12):</b> #1, 34–41 &nbsp; ● <b>Europe (11):</b> #4, 6, 15–16, 18–26</div>
-        <div>● <b>MidEast &amp; Africa (14):</b> #5, 10–14, 27–33 &nbsp; ● <b>Asia &amp; Oceania (14):</b> #2–3, 7–9, 17, 42–49</div>
-        <div>● <b>Verification:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
+        <div>● <b>Americas (7):</b> #1, 25–29 &nbsp; ● <b>Europe (7):</b> #4, 6, 15, 17–20, 35</div>
+        <div>● <b>MidEast &amp; Africa (10):</b> #5, 10–14, 21–24 &nbsp; ● <b>Asia/Oceania (11):</b> #2–3, 7–9, 16, 30–33</div>
+        <div>● <b>How Sure:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
       </div>
     </div>
 
     <div class="wires-box">
       <div class="box-head">
-        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 39 MORE DATED &amp; SOURCED WORLD WIRES</span>
-        <span style="color:#047857">STORIES 14–52</span>
+        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 22 MORE DATED &amp; SOURCED WORLD WIRES</span>
+        <span style="color:#047857">STORIES 14–35</span>
       </div>
       <div class="wires-cols">
         <div class="brief-col">{render_briefs(BRIEFS_COL_1)}</div>

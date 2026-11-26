@@ -19,7 +19,7 @@ import shutil
 import sys
 
 DAY_TITLE = "Wednesday 25 November 2026"
-SUBTITLE = "21 STORIES · 11 REGIONS · 15 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026"
+SUBTITLE = "35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026"
 
 UTC_TIMELINE = [
     ("00:18", "Shenzhou-24 launch"),
@@ -46,7 +46,6 @@ TOP_STATS = [
 LEAD_STORIES = [
     {
         "num": 1,
-        "field": "trade",
         "loc": "WASHINGTON · TRADE",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -58,7 +57,6 @@ LEAD_STORIES = [
     },
     {
         "num": 2,
-        "field": "markets",
         "loc": "SEOUL · TOKYO · TAIPEI · MARKETS",
         "tag": "CONFIRMED",
         "tag_col": "#1d4ed8",
@@ -70,7 +68,6 @@ LEAD_STORIES = [
     },
     {
         "num": 3,
-        "field": "space",
         "loc": "JIUQUAN, CHINA · SPACE",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -85,7 +82,6 @@ LEAD_STORIES = [
 MID_ROW_1 = [
     {
         "num": 4,
-        "field": "energy",
         "loc": "UKRAINE · WAR",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -97,7 +93,6 @@ MID_ROW_1 = [
     },
     {
         "num": 5,
-        "field": "security",
         "loc": "RAS TANURA · WAR",
         "tag": "CONFIRMED",
         "tag_col": "#1d4ed8",
@@ -109,7 +104,6 @@ MID_ROW_1 = [
     },
     {
         "num": 6,
-        "field": "energy",
         "loc": "LONDON · ENERGY",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -124,7 +118,6 @@ MID_ROW_1 = [
 MID_ROW_2 = [
     {
         "num": 7,
-        "field": "diplomacy",
         "loc": "CANBERRA · DIPLOMACY",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -136,7 +129,6 @@ MID_ROW_2 = [
     },
     {
         "num": 8,
-        "field": "labour",
         "loc": "DHAKA · LABOUR",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -148,7 +140,6 @@ MID_ROW_2 = [
     },
     {
         "num": 9,
-        "field": "disaster",
         "loc": "BOGOR · DISASTER",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
@@ -161,24 +152,36 @@ MID_ROW_2 = [
 ]
 
 BRIEFS_COL_1 = [
-    (10, "Giza, Cairo", "Tanker blast kills 30", "OFFICIAL", "disaster"),
-    (11, "Gaza City", "Hamas security chief killed", "REPORTED", "conflict"),
-    (12, "Cape Town", "Phala Phala report voided", "OFFICIAL", "justice"),
-    (13, "Jerusalem", "Netanyahu bribery doubt", "CONFIRMED", "justice"),
-    (14, "Hormuz", "2 tankers hit mines off Hormuz", "CLAIM", "security"),
-    (15, "Samara", "Syzran and Kuibyshev ablaze", "CONFIRMED", "conflict"),
+    (10, "Giza, Cairo", "Tanker blast on ring road kills at least 30", "OFFICIAL"),
+    (11, "Gaza City", "Strike kills Hamas security chief in al-Shati", "REPORTED"),
+    (12, "Cape Town", "Court voids Phala Phala report against Ramaphosa", "OFFICIAL"),
+    (13, "Jerusalem", "Judges doubt Netanyahu bribery count", "CONFIRMED"),
+    (14, "Hormuz", "Iran IRGC: 2 tankers hit mines off Hormuz", "CLAIM"),
+    (15, "Samara", "Drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
+    (16, "Pyongyang", "N Korea gives Swiss envoy 48h to leave", "OFFICIAL"),
+    (17, "Brussels", "EU proposes €50bn quantum technology fund", "OFFICIAL"),
+    (18, "London", "Poundland collapse puts 11,000 UK jobs at risk", "CONFIRMED"),
+    (19, "Kyiv", "Zelensky: Ukraine needs €115bn aid for 2027", "OFFICIAL"),
+    (20, "Paris", "Eurostar walkout cancels Channel trains", "CONFIRMED"),
+    (21, "Ed Damazin", "RSF drone strikes kill 19 in Sudan Blue Nile", "CONFIRMED"),
+    (22, "Lagos", "Police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
-    (16, "Pyongyang", "Swiss envoy given 48h", "OFFICIAL", "diplomacy"),
-    (17, "Brussels", "50bn euro quantum fund", "OFFICIAL", "tech"),
-    (18, "Cartagena", "20 hostages freed", "CONFIRMED", "crime"),
-    (19, "Sydney", "Storms shut NSW schools", "REPORTED", "weather"),
-    (20, "Deep Space", "Hera images DART crater", "CONFIRMED", "science"),
-    (21, "Lisbon", "Sporting CP 2-2 Man United", "CONFIRMED", "sport"),
+    (23, "Harare", "Court issues arrest warrant for Mugabe's son", "OFFICIAL"),
+    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget", "OFFICIAL"),
+    (25, "New York", "Wall St mixed: Dow +0.3%, Nasdaq -0.6%", "OFFICIAL"),
+    (26, "Washington", "FCC clears SpaceX 1m orbital data nodes", "OFFICIAL"),
+    (27, "Iowa", "Army detonates 10,000 lb of lead azide", "OFFICIAL"),
+    (28, "Cartagena", "Police free 20 supermarket hostages", "OFFICIAL"),
+    (29, "Paraná", "Storms kill 6, hit 40 towns in south Brazil", "OFFICIAL"),
+    (30, "Sydney", "CPI 4.9%; Lamarre-Condon found guilty", "OFFICIAL"),
+    (31, "Kuala Lumpur", "Malaysia sues Google for RM600m over YouTube", "OFFICIAL"),
+    (32, "Hong Kong", "URBTIX breach exposes 1.3m users' data", "OFFICIAL"),
+    (33, "Karachi", "Building collapse kills 3, injures 14", "CONFIRMED"),
+    (34, "Deep Space", "Hera images stadium-sized DART crater", "OFFICIAL"),
+    (35, "Lisbon", "Sporting CP 2–2 Man United in Champions League", "OFFICIAL"),
 ]
-
-BRIEFS_COL_3 = []
 
 
 def svg_scene(kind: str, banner: str) -> str:
@@ -342,13 +345,32 @@ def svg_scene(kind: str, banner: str) -> str:
 def build_world_map_svg() -> str:
     """Return a clean SVG world map with simplified continent silhouettes and 52 numbered pins."""
     pins = [
-        (1, 60, 56, "#2563eb"),   (2, 258, 54, "#1d4ed8"),  (3, 228, 52, "#059669"),
-        (4, 186, 44, "#dc2626"),  (5, 196, 74, "#d97706"),  (6, 146, 40, "#7c3aed"),
-        (7, 274, 118, "#0284c7"), (8, 224, 70, "#059669"),  (9, 238, 96, "#d97706"),
-        (10, 172, 66, "#dc2626"), (11, 180, 62, "#dc2626"), (12, 166, 122, "#059669"),
-        (13, 181, 60, "#2563eb"), (14, 198, 68, "#d97706"), (15, 196, 42, "#dc2626"),
-        (16, 250, 52, "#dc2626"), (17, 152, 43, "#2563eb"), (18, 82, 86, "#059669"),
-        (19, 268, 122, "#0284c7"),(21, 138, 58, "#7c3aed"),
+        # (num, x, y, color)
+        (1, 70, 56, "#dc2626"),   # Washington
+        (2, 255, 58, "#2563eb"),  # Seoul/Tokyo/Taipei
+        (3, 228, 52, "#059669"),  # Jiuquan
+        (4, 178, 44, "#dc2626"),  # Ukraine
+        (5, 190, 72, "#d97706"),  # Hodeidah/Ras Tanura
+        (6, 146, 40, "#7c3aed"),  # London
+        (7, 274, 118, "#0284c7"), # Canberra/Solomons
+        (8, 224, 70, "#059669"),  # Dhaka
+        (9, 238, 96, "#d97706"),  # Bogor
+        (10, 178, 62, "#dc2626"), # Gaza
+        (11, 166, 122, "#059669"),# Cape Town
+        (12, 182, 60, "#2563eb"), # Jerusalem
+        (13, 172, 66, "#dc2626"), # Cairo
+        (14, 198, 68, "#d97706"), # Hormuz
+        (15, 192, 42, "#dc2626"), # Samara
+        (16, 250, 52, "#dc2626"), # Pyongyang
+        (17, 152, 43, "#2563eb"), # Brussels
+        (21, 176, 82, "#dc2626"), # Sudan
+        (22, 152, 84, "#059669"), # Lagos
+        (25, 76, 52, "#2563eb"),  # New York
+        (28, 82, 86, "#059669"),  # Cartagena
+        (29, 98, 114, "#059669"), # Parana Brazil
+        (30, 268, 122, "#0284c7"),# Sydney
+        (31, 234, 86, "#059669"), # Kuala Lumpur
+        (33, 208, 68, "#d97706"), # Karachi
     ]
     pin_els = []
     for num, x, y, col in pins:
@@ -381,54 +403,8 @@ def build_world_map_svg() -> str:
     """
 
 
-REGIONS = {
-    1: "N.America", 2: "E.Asia", 3: "E.Asia", 4: "Europe", 5: "MidEast", 6: "Europe",
-    7: "Oceania", 8: "S.Asia", 9: "SE.Asia", 10: "N.Africa", 11: "MidEast",
-    12: "Sub-Sahara", 13: "MidEast", 14: "MidEast", 15: "Europe", 16: "E.Asia",
-    17: "Europe", 18: "LatAm", 19: "Oceania", 20: "Orbit", 21: "Europe",
-}
-
-REGION_GROUPS = [
-    ("Americas", ["N.America", "LatAm"]),
-    ("Europe", ["Europe"]),
-    ("MidEast & N.Africa", ["MidEast", "N.Africa"]),
-    ("Sub-Sahara", ["Sub-Sahara"]),
-    ("Asia", ["E.Asia", "S.Asia", "SE.Asia"]),
-    ("Oceania & Orbit", ["Oceania", "Orbit"]),
-]
-
-
-def coverage():
-    """Every headline count is derived from the story data, never typed by hand."""
-    cards = LEAD_STORIES + MID_ROW_1 + MID_ROW_2
-    wires = BRIEFS_COL_1 + BRIEFS_COL_2 + list(BRIEFS_COL_3)
-    nums = [c["num"] for c in cards] + [w[0] for w in wires]
-    fields = {c["field"] for c in cards} | {w[4] for w in wires}
-    return {
-        "n_stories": len(nums),
-        "n_regions": len({REGIONS[n] for n in nums}),
-        "n_fields": len(fields),
-        "n_max": max(nums),
-        "w_min": min(w[0] for w in wires),
-    }
-
-
-def build_legend() -> str:
-    lines = []
-    for label, regions in REGION_GROUPS:
-        ns = sorted(n for n, r in REGIONS.items() if r in regions)
-        if ns:
-            lines.append("● <b>%s %d:</b> #%s" % (label, len(ns), ", ".join(map(str, ns))))
-    lines.append("● <b>How sure:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · "
-                 "REPORTED = 1 outlet · CLAIM = 1 side")
-    return "".join("<div>%s</div>" % l for l in lines)
-
-
 def build_broadsheet_html() -> str:
     """Assemble the complete 1024x1024 HTML+SVG broadsheet page."""
-    cv = coverage()
-    N_STORIES, N_REGIONS = cv["n_stories"], cv["n_regions"]
-    N_FIELDS, N_MAX, W_MIN = cv["n_fields"], cv["n_max"], cv["w_min"]
     utc_items = "".join(
         f'<div class="utc-item"><span class="utc-t">{t}</span><span class="utc-e">{e}</span></div>'
         for t, e in UTC_TIMELINE
@@ -476,14 +452,14 @@ def build_broadsheet_html() -> str:
 
     def render_briefs(items):
         rows = []
-        for num, city, txt, tag, _field in items:
-            tcol = "#047857" if tag == "OFFICIAL" else ("#1d4ed8" if tag == "CONFIRMED" else ("#b45309" if tag == "REPORTED" else "#b91c1c"))
+        for num, city, txt, tag in items:
+            tcol = "#047857" if tag == "OFFICIAL" else ("#1d4ed8" if tag == "CONFIRMED" else ("#b45309" if tag == "REPORTED" else "#7c3aed"))
             rows.append(
                 f'<div class="brief-row">'
                 f'<span class="b-left"><span class="b-num">{num}</span>'
-                f'<span class="b-city">{city}:</span> '
+                f'<span class="b-city">{city}</span> '
                 f'<span class="b-txt">{txt}</span></span>'
-                f'<span class="b-tag" style="color:{tcol}">{tag}</span>'
+                f'<span class="b-tag" style="color:{tcol}">[{tag}]</span>'
                 f'</div>'
             )
         return "".join(rows)
@@ -503,7 +479,7 @@ def build_broadsheet_html() -> str:
   .page {{
     width: 1024px; height: 1024px; padding: 5px 8px;
     display: grid;
-    grid-template-rows: 88px 38px 20px 218px 218px 218px 144px 40px;
+    grid-template-rows: 80px 36px 20px 220px 220px 220px 148px 40px;
     gap: 4px;
   }}
   /* MASTHEAD */
@@ -513,7 +489,7 @@ def build_broadsheet_html() -> str:
     border: 1.5px solid #141d33; border-top: 4px solid #141d33; border-bottom: 3px solid #b91c1c; overflow: hidden;
   }}
   .mast-line1 {{
-    font-size: 11.4px; font-weight: 900; letter-spacing: 0.1px; color: #991b1b;
+    font-size: 8.4px; font-weight: 900; letter-spacing: 0; color: #991b1b;
     white-space: nowrap; overflow: hidden;
   }}
   .mast-date {{
@@ -522,7 +498,7 @@ def build_broadsheet_html() -> str:
     white-space: nowrap; margin: 2px 0;
   }}
   .mast-line3 {{
-    font-size: 10.4px; color: #0f172a; font-weight: 900;
+    font-size: 9.0px; color: #0f172a; font-weight: 900;
     white-space: nowrap; overflow: hidden;
   }}
 
@@ -534,8 +510,8 @@ def build_broadsheet_html() -> str:
     background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
     padding: 2px 6px; display: flex; align-items: center; gap: 6px;
   }}
-  .stat-val {{ font-size: 22px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -0.6px; }}
-  .stat-lbl {{ font-size: 8.5px; line-height: 1.1; color: #0f172a; font-weight: 800; }}
+  .stat-val {{ font-size: 19px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -0.6px; }}
+  .stat-lbl {{ font-size: 7.9px; line-height: 1.1; color: #0f172a; font-weight: 800; }}
 
   /* UTC TIMELINE */
   .utc-bar {{
@@ -622,7 +598,7 @@ def build_broadsheet_html() -> str:
     min-width: 0; min-height: 0; overflow: hidden;
   }}
   .box-head {{
-    font-size: 9.2px; font-weight: 900; color: #141d33; text-transform: uppercase;
+    font-size: 7.6px; font-weight: 900; color: #141d33; text-transform: uppercase;
     letter-spacing: 0.3px; border-bottom: 1.5px solid #141d33; padding-bottom: 1px; margin-bottom: 2px;
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }}
@@ -637,17 +613,17 @@ def build_broadsheet_html() -> str:
     display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
   }}
   .brief-row {{
-    font-size: 12.6px; line-height: 1.15; height: 22.2px; color: #0f172a;
+    font-size: 9.4px; line-height: 1.1; height: 10.2px; color: #0f172a;
     white-space: nowrap; overflow: hidden;
     display: flex; align-items: center; justify-content: space-between;
   }}
   .b-left {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
   .b-num {{
-    display: inline-block; width: 23px; font-weight: 900; color: #b91c1c;
+    display: inline-block; width: 14px; font-weight: 900; color: #b91c1c;
   }}
   .b-city {{ font-weight: 900; color: #0f172a; }}
   .b-txt {{ font-weight: 600; color: #1e293b; }}
-  .b-tag {{ font-size: 9.2px; font-weight: 900; margin-left: 3px; flex-shrink: 0; }}
+  .b-tag {{ font-size: 6.8px; font-weight: 900; margin-left: 3px; flex-shrink: 0; }}
 
   /* FOOTER DATE CHECK */
   .date-check {{
@@ -668,7 +644,7 @@ def build_broadsheet_html() -> str:
 <body>
 <div class="page">
   <div class="masthead">
-    <div class="mast-line1">THE WORLD IN ONE DAY — {N_STORIES} STORIES · {N_REGIONS} REGIONS · {N_FIELDS} FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 9 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
+    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 9 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
     <div class="mast-date">Wednesday 25 November 2026</div>
     <div class="mast-line3">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% below 5,000 · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+ · Java gold mine flood traps 17</div>
   </div>
@@ -690,16 +666,21 @@ def build_broadsheet_html() -> str:
     <div class="map-box">
       <div class="box-head">
         <span>WHERE IT HAPPENED</span>
-        <span style="color:#b91c1c">PINS 1–{N_MAX}</span>
+        <span style="color:#b91c1c">PINS 1–35</span>
       </div>
       {build_world_map_svg()}
-      <div class="region-legend">{build_legend()}</div>
+      <div class="region-legend">
+        <div>● <b>Americas 6:</b> #1, 25–29 &nbsp; ● <b>Europe 8:</b> #4, 6, 15, 17–20, 35</div>
+        <div>● <b>MidEast &amp; N.Africa 5:</b> #5, 10–11, 13–14 &nbsp; ● <b>Sub-Sahara 5:</b> #12, 21–24</div>
+        <div>● <b>Asia 8:</b> #2–3, 8–9, 16, 31–33 &nbsp; ● <b>Oceania &amp; Space 3:</b> #7, 30, 34</div>
+        <div>● <b>How sure:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
+      </div>
     </div>
 
     <div class="wires-box">
       <div class="box-head">
-        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — {N_STORIES} STORIES · {N_REGIONS} REGIONS · {N_FIELDS} FIELDS · EVERY ONE DATED</span>
-        <span style="color:#047857">STORIES {W_MIN}–{N_MAX}</span>
+        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 24 MORE DATED &amp; SOURCED WORLD WIRES</span>
+        <span style="color:#047857">STORIES 12–35</span>
       </div>
       <div class="wires-cols">
         <div class="brief-col">{render_briefs(BRIEFS_COL_1)}</div>

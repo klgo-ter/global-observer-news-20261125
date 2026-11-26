@@ -79,7 +79,7 @@ LEAD_STORIES = [
     },
 ]
 
-LEAD_STORIES += [
+MID_ROW_1 = [
     {
         "num": 4,
         "loc": "UKRAINE · WAR",
@@ -115,45 +115,73 @@ LEAD_STORIES += [
     },
 ]
 
-MID_ROW_1 = []
-MID_ROW_2 = []
+MID_ROW_2 = [
+    {
+        "num": 7,
+        "loc": "CANBERRA · DIPLOMACY",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "A$740M · NO FOREIGN BASES",
+        "title": "Solomon Islands signs Australia security pact",
+        "body": "10-year A$740m treaty makes Australia primary partner; bars foreign bases.",
+        "src": "ABC · Reuters",
+        "svg": "treaty",
+    },
+    {
+        "num": 8,
+        "loc": "DHAKA · LABOUR",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "TK 12,500 → 17,000 (+36%)",
+        "title": "Bangladesh garment wage up 36% to Tk 17,000",
+        "body": "Board votes 4–2; unions reject the figure as 87 plants shut.",
+        "src": "Daily Star · Reuters",
+        "svg": "garment",
+    },
+    {
+        "num": 9,
+        "loc": "BOGOR · DISASTER",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "9 DEAD · 17 TRAPPED (100M)",
+        "title": "9 dead, 17 trapped in flooded Java mine",
+        "body": "Flash flood fills an illegal 100m pit in West Java; rescuers dig.",
+        "src": "BNPB · Antara · AP",
+        "svg": "mine",
+    },
+]
 
 BRIEFS_COL_1 = [
-    (7,  "Canberra", "Solomon Islands signs security pact with Australia", "OFFICIAL"),
-    (8,  "Dhaka", "Garment wage up 36% to Tk 17,000; unions reject", "OFFICIAL"),
-    (9,  "Bogor", "9 dead, 17 trapped in flooded illegal Java mine", "OFFICIAL"),
     (10, "Giza, Cairo", "Tanker blast on ring road kills at least 30", "OFFICIAL"),
     (11, "Gaza City", "Strike kills Hamas security chief in al-Shati", "REPORTED"),
     (12, "Cape Town", "Court voids Phala Phala report against Ramaphosa", "OFFICIAL"),
-    (13, "Jerusalem", "Judges doubt Netanyahu bribery count in Case 4000", "CONFIRMED"),
+    (13, "Jerusalem", "Judges doubt Netanyahu bribery count", "CONFIRMED"),
     (14, "Hormuz", "Iran IRGC: 2 tankers hit mines off Hormuz", "CLAIM"),
     (15, "Samara", "Drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
-    (16, "Pyongyang", "N Korea gives Swiss envoy 48 hours to leave", "OFFICIAL"),
+    (16, "Pyongyang", "N Korea gives Swiss envoy 48h to leave", "OFFICIAL"),
     (17, "Brussels", "EU proposes €50bn quantum technology fund", "OFFICIAL"),
     (18, "London", "Poundland collapse puts 11,000 UK jobs at risk", "CONFIRMED"),
     (19, "Kyiv", "Zelensky: Ukraine needs €115bn aid for 2027", "OFFICIAL"),
-    (20, "Paris", "Eurostar walkout cancels cross-Channel trains", "CONFIRMED"),
+    (20, "Paris", "Eurostar walkout cancels Channel trains", "CONFIRMED"),
     (21, "Ed Damazin", "RSF drone strikes kill 19 in Sudan Blue Nile", "CONFIRMED"),
+    (22, "Lagos", "Police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
-    (22, "Lagos", "Police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
     (23, "Harare", "Court issues arrest warrant for Mugabe's son", "OFFICIAL"),
     (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget", "OFFICIAL"),
     (25, "New York", "Wall St mixed: Dow +0.3%, Nasdaq -0.6%", "OFFICIAL"),
     (26, "Washington", "FCC clears SpaceX 1m orbital data nodes", "OFFICIAL"),
     (27, "Iowa", "Army detonates 10,000 lb of lead azide", "OFFICIAL"),
     (28, "Cartagena", "Police free 20 supermarket hostages", "OFFICIAL"),
-    (29, "Paraná", "Storms kill 6, hit 40 towns in southern Brazil", "OFFICIAL"),
+    (29, "Paraná", "Storms kill 6, hit 40 towns in south Brazil", "OFFICIAL"),
     (30, "Sydney", "CPI 4.9%; Lamarre-Condon found guilty", "OFFICIAL"),
     (31, "Kuala Lumpur", "Malaysia sues Google for RM600m over YouTube", "OFFICIAL"),
     (32, "Hong Kong", "URBTIX breach exposes 1.3m users' data", "OFFICIAL"),
     (33, "Karachi", "Building collapse kills 3, injures 14", "CONFIRMED"),
     (34, "Deep Space", "Hera images stadium-sized DART crater", "OFFICIAL"),
-    (35, "Lisbon", "Sporting CP 2-2 Man United in Champions League", "OFFICIAL"),
+    (35, "Lisbon", "Sporting CP 2–2 Man United in Champions League", "OFFICIAL"),
 ]
-
-BRIEFS_COL_3 = []
 
 
 def svg_scene(kind: str, banner: str) -> str:
@@ -451,7 +479,7 @@ def build_broadsheet_html() -> str:
   .page {{
     width: 1024px; height: 1024px; padding: 5px 8px;
     display: grid;
-    grid-template-rows: 80px 36px 20px 654px 152px 40px;
+    grid-template-rows: 88px 38px 20px 218px 218px 218px 144px 40px;
     gap: 4px;
   }}
   /* MASTHEAD */
@@ -461,7 +489,7 @@ def build_broadsheet_html() -> str:
     border: 1.5px solid #141d33; border-top: 4px solid #141d33; border-bottom: 3px solid #b91c1c; overflow: hidden;
   }}
   .mast-line1 {{
-    font-size: 8.4px; font-weight: 900; letter-spacing: 0; color: #991b1b;
+    font-size: 11.4px; font-weight: 900; letter-spacing: 0.1px; color: #991b1b;
     white-space: nowrap; overflow: hidden;
   }}
   .mast-date {{
@@ -470,7 +498,7 @@ def build_broadsheet_html() -> str:
     white-space: nowrap; margin: 2px 0;
   }}
   .mast-line3 {{
-    font-size: 9.0px; color: #0f172a; font-weight: 900;
+    font-size: 10.4px; color: #0f172a; font-weight: 900;
     white-space: nowrap; overflow: hidden;
   }}
 
@@ -482,8 +510,8 @@ def build_broadsheet_html() -> str:
     background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
     padding: 2px 6px; display: flex; align-items: center; gap: 6px;
   }}
-  .stat-val {{ font-size: 19px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -0.6px; }}
-  .stat-lbl {{ font-size: 7.9px; line-height: 1.1; color: #0f172a; font-weight: 800; }}
+  .stat-val {{ font-size: 22px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -0.6px; }}
+  .stat-lbl {{ font-size: 8.5px; line-height: 1.1; color: #0f172a; font-weight: 800; }}
 
   /* UTC TIMELINE */
   .utc-bar {{
@@ -527,7 +555,7 @@ def build_broadsheet_html() -> str:
     position: relative; width: 100%; border-radius: 3px; overflow: hidden;
     border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
   }}
-  .lead-card .scene-svg {{ width: 100%; height: 168px; display: block; }}
+  .lead-card .scene-svg {{ width: 100%; height: 84px; display: block; }}
   .mid-card .scene-svg {{ width: 100%; height: 96px; display: block; }}
   .scene-banner {{
     position: absolute; bottom: 0; right: 0;
@@ -537,11 +565,11 @@ def build_broadsheet_html() -> str:
   }}
   .lead-title {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 31px; font-weight: 900; line-height: 1.07; color: #000000; margin-bottom: 2px;
+    font-size: 26px; font-weight: 900; line-height: 1.1; color: #000000; margin-bottom: 2px;
     letter-spacing: -0.5px;
   }}
   .lead-body {{
-    font-size: 11.6px; line-height: 1.2; color: #1e293b; font-weight: 700; margin-bottom: 2px;
+    font-size: 10.2px; line-height: 1.2; color: #1e293b; font-weight: 700; margin-bottom: 2px;
   }}
   .card-src {{
     font-size: 7.4px; font-weight: 800; color: #475569; text-transform: uppercase;
@@ -570,7 +598,7 @@ def build_broadsheet_html() -> str:
     min-width: 0; min-height: 0; overflow: hidden;
   }}
   .box-head {{
-    font-size: 7.6px; font-weight: 900; color: #141d33; text-transform: uppercase;
+    font-size: 9.2px; font-weight: 900; color: #141d33; text-transform: uppercase;
     letter-spacing: 0.3px; border-bottom: 1.5px solid #141d33; padding-bottom: 1px; margin-bottom: 2px;
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }}
@@ -579,13 +607,13 @@ def build_broadsheet_html() -> str:
     font-size: 6.4px; line-height: 1.18; color: #1e293b; font-weight: 700; margin-top: 1px;
   }}
   .wires-cols {{
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
   }}
   .brief-col {{
     display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
   }}
   .brief-row {{
-    font-size: 9.3px; line-height: 1.05; height: 10.1px; color: #0f172a;
+    font-size: 9.4px; line-height: 1.1; height: 10.2px; color: #0f172a;
     white-space: nowrap; overflow: hidden;
     display: flex; align-items: center; justify-content: space-between;
   }}
@@ -630,6 +658,10 @@ def build_broadsheet_html() -> str:
 
   <div class="lead-grid">{''.join(lead_cards)}</div>
 
+  <div class="mid-grid">{render_mid_row(MID_ROW_1)}</div>
+
+  <div class="mid-grid">{render_mid_row(MID_ROW_2)}</div>
+
   <div class="bottom-grid">
     <div class="map-box">
       <div class="box-head">
@@ -647,13 +679,12 @@ def build_broadsheet_html() -> str:
 
     <div class="wires-box">
       <div class="box-head">
-        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 29 MORE DATED &amp; SOURCED WORLD WIRES</span>
-        <span style="color:#047857">STORIES 7–35</span>
+        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 26 MORE WIRES · 35 STORIES IN ALL, EVERY ONE DATED</span>
+        <span style="color:#047857">STORIES 10–35</span>
       </div>
       <div class="wires-cols">
         <div class="brief-col">{render_briefs(BRIEFS_COL_1)}</div>
         <div class="brief-col">{render_briefs(BRIEFS_COL_2)}</div>
-        <div class="brief-col">{render_briefs(BRIEFS_COL_3)}</div>
       </div>
     </div>
   </div>
@@ -664,7 +695,7 @@ def build_broadsheet_html() -> str:
       Nvidia/Jensen Huang (24 Nov) · Hodeidah strike (24 Nov) · Riyadh tower (24 Nov) · Huawei verdict (24 Nov) · Real Madrid 5–1 PSV (24 Nov) · COP31 (22 Nov).
     </div>
     <div class="dc-line2">
-      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 6 scenes are original vector drawings.</span>
+      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 9 scenes are original vector drawings.</span>
       <span><b>SOURCES:</b> Reuters · AP · AFP · Al Jazeera · USTR · KRX/Yonhap · CMSA/Xinhua · Ofgem · ABC · BNPB · ESA</span>
     </div>
   </div>

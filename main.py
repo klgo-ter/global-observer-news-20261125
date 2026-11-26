@@ -50,8 +50,8 @@ LEAD_STORIES = [
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "UP TO 35% · 14 ECONOMIES",
-        "title": "US proposes tariffs up to 35% on EU, China & 12 more economies",
-        "body": "USTR Section 301 cites excess capacity: up to 35% Vietnam, 25% India, 20% China, 15% EU & 10% Brazil Embraer. EU & Beijing reject claims; hearings Jan 2027.",
+        "title": "US tariffs up to 35% on 14 economies",
+        "body": "Vietnam 35%, India 25%, China 20%, EU 15%; hearings Jan 2027.",
         "src": "USTR · Reuters · CNBC",
         "svg": "tariffs",
     },
@@ -61,8 +61,8 @@ LEAD_STORIES = [
         "tag": "CONFIRMED",
         "tag_col": "#1d4ed8",
         "banner": "KOSPI -6.2% · SK HYNIX -11.1%",
-        "title": "AI doubts sink Asian chip stocks: Kospi plunges 6.2% below 5,000",
-        "body": "Kospi ends at 4,697.51 after 09:06 sidecar halt; SK hynix -11.1%, Samsung -9.9% on AI capex doubts. Taiwan Taiex -4.8% (TSMC -5.4%), Nikkei -2.8%.",
+        "title": "Kospi falls 6.2% on AI doubts",
+        "body": "Closes 4,697.51; SK hynix -11.1%, Samsung -9.9%, Taiex -4.8%.",
         "src": "KRX · Yonhap · Reuters",
         "svg": "chips",
     },
@@ -72,8 +72,8 @@ LEAD_STORIES = [
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "SHENZHOU-24 · DOCKED 03:56 UTC",
-        "title": "Pakistan's first astronaut docks at China's Tiangong station",
-        "body": "Payload specialist Muhammad Zeeshan Ali, 40, launched at 00:18 UTC on Shenzhou-24 with Tang Hongbo & Wu Yi, becoming Tiangong's first foreign astronaut.",
+        "title": "Pakistan astronaut docks at Tiangong",
+        "body": "Zeeshan Ali, 40, first foreigner aboard the station.",
         "src": "CMSA · Xinhua · AP",
         "svg": "space",
     },
@@ -124,78 +124,58 @@ MID_ROW_1 = [
         "src": "ABC · Reuters",
         "svg": "treaty",
     },
+]
+
+MID_ROW_2 = [
     {
         "num": 8,
         "loc": "DHAKA · LABOUR",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "TK 12,500 → 17,000 (+36%)",
-        "title": "Bangladesh raises garment minimum wage 36%",
-        "body": "Board votes 4–2 for Tk 17,000 ($139); unions reject as 87 plants shut.",
+        "title": "Bangladesh garment wage up 36% to Tk 17,000",
+        "body": "Board votes 4–2; unions reject as 87 plants shut.",
         "src": "Daily Star · Reuters",
         "svg": "garment",
     },
-]
-
-MID_ROW_2 = [
     {
         "num": 9,
         "loc": "BOGOR · DISASTER",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "9 DEAD · 17 TRAPPED (100M)",
-        "title": "9 dead, 17 trapped in flooded Java gold mine",
-        "body": "Flash flood fills 100m West Java pit; 9 bodies pulled, 17 sought.",
+        "title": "9 dead, 17 trapped in flooded Java mine",
+        "body": "Flash flood fills 100m illegal pit in West Java.",
         "src": "BNPB · Antara · AP",
         "svg": "mine",
     },
     {
         "num": 10,
-        "loc": "GAZA CITY · WAR",
-        "tag": "REPORTED",
-        "tag_col": "#b45309",
-        "banner": "SHATI CAMP · SECURITY CHIEF",
-        "title": "Israeli strike kills Hamas security chief in Gaza",
-        "body": "Col. Abu al-Awf, wife & 2 daughters killed in al-Shati camp strike.",
-        "src": "AP · Al Jazeera",
-        "svg": "gaza",
-    },
-    {
-        "num": 11,
-        "loc": "CAPE TOWN · JUSTICE",
-        "tag": "OFFICIAL",
-        "tag_col": "#047857",
-        "banner": "PHALA PHALA VOIDED",
-        "title": "Court lifts 'Farmgate' threat to Ramaphosa",
-        "body": "Constitutional Court voids 2022 impeachment panel report.",
-        "src": "News24 · Reuters",
-        "svg": "court",
-    },
-    {
-        "num": 12,
-        "loc": "JERUSALEM · JUSTICE",
-        "tag": "CONFIRMED",
-        "tag_col": "#1d4ed8",
-        "banner": "CASE 4000 · JUDGES WARN",
-        "title": "Judges urge rethink of Netanyahu bribery charge",
-        "body": "Panel tells prosecutors bribery count faces 'considerable difficulties'.",
-        "src": "Haaretz · Reuters",
-        "svg": "gavel",
-    },
-    {
-        "num": 13,
         "loc": "GIZA, CAIRO · DISASTER",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "30+ KILLED · 27 CARS BURNED",
-        "title": "Fuel tanker fire kills at least 30 near Cairo",
-        "body": "Overturned tanker explodes on Greater Cairo ring road; 18 hurt.",
+        "title": "Cairo tanker blast kills at least 30",
+        "body": "Tanker overturns and explodes on ring road; 18 hurt.",
         "src": "Health Min · AP · AFP",
         "svg": "tanker",
+    },
+    {
+        "num": 11,
+        "loc": "GAZA CITY · WAR",
+        "tag": "REPORTED",
+        "tag_col": "#b45309",
+        "banner": "SHATI CAMP · SECURITY CHIEF",
+        "title": "Israeli strike kills Hamas security chief",
+        "body": "Col. Abu al-Awf, wife and two daughters die in al-Shati.",
+        "src": "AP · Al Jazeera",
+        "svg": "gaza",
     },
 ]
 
 BRIEFS_COL_1 = [
+    (12, "Cape Town", "Court voids Phala Phala report against Ramaphosa", "OFFICIAL"),
+    (13, "Jerusalem", "Judges doubt Netanyahu bribery count in Case 4000", "CONFIRMED"),
     (14, "Hormuz", "Iran IRGC says 2 tankers hit mines on 'unauthorised route'", "CLAIM"),
     (15, "Samara", "Ukrainian drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
     (16, "Pyongyang", "North Korea gives Swiss envoy 48h to shut office & leave", "OFFICIAL"),
@@ -206,10 +186,10 @@ BRIEFS_COL_1 = [
     (21, "Ed Damazin", "RSF drone strikes kill 19 civilians in Sudan Blue Nile", "CONFIRMED"),
     (22, "Lagos", "Nigeria police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
     (23, "Harare", "Zimbabwe court issues arrest warrant for Mugabe's son", "OFFICIAL"),
-    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
+    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
     (25, "New York", "Wall St pares losses: Dow +0.3%, Nasdaq -0.6%; GDP +4.3%", "OFFICIAL"),
     (26, "Washington", "FCC clears SpaceX plan for 1 million orbital data nodes", "OFFICIAL"),
     (27, "Iowa", "US Army detonates 10,000 lb of lead azide at ammo plant", "OFFICIAL"),
@@ -519,7 +499,7 @@ def build_broadsheet_html() -> str:
   .page {{
     width: 1024px; height: 1024px; padding: 5px 8px;
     display: grid;
-    grid-template-rows: 70px 36px 20px 250px 174px 174px 226px 42px;
+    grid-template-rows: 80px 36px 20px 250px 172px 172px 214px 42px;
     gap: 4px;
   }}
   /* MASTHEAD */
@@ -534,8 +514,8 @@ def build_broadsheet_html() -> str:
   }}
   .mast-date {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 36px; font-weight: 900; line-height: 1.02; color: #000000; letter-spacing: 0;
-    white-space: nowrap; margin: 1px 0;
+    font-size: 42px; font-weight: 900; line-height: 1.0; color: #000000; letter-spacing: -0.8px;
+    white-space: nowrap; margin: 2px 0;
   }}
   .mast-line3 {{
     font-size: 9.0px; color: #0f172a; font-weight: 900;
@@ -595,8 +575,8 @@ def build_broadsheet_html() -> str:
     position: relative; width: 100%; border-radius: 3px; overflow: hidden;
     border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
   }}
-  .lead-card .scene-svg {{ width: 100%; height: 92px; display: block; }}
-  .mid-card .scene-svg {{ width: 100%; height: 54px; display: block; }}
+  .lead-card .scene-svg {{ width: 100%; height: 88px; display: block; }}
+  .mid-card .scene-svg {{ width: 100%; height: 58px; display: block; }}
   .scene-banner {{
     position: absolute; bottom: 0; right: 0;
     background: rgba(15, 23, 42, 0.92); color: #fef08a;
@@ -605,11 +585,11 @@ def build_broadsheet_html() -> str:
   }}
   .lead-title {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 16.5px; font-weight: 900; line-height: 1.12; color: #000000; margin-bottom: 2px;
-    letter-spacing: -0.25px;
+    font-size: 26px; font-weight: 900; line-height: 1.1; color: #000000; margin-bottom: 2px;
+    letter-spacing: -0.5px;
   }}
   .lead-body {{
-    font-size: 9.4px; line-height: 1.22; color: #1e293b; font-weight: 700; margin-bottom: 2px;
+    font-size: 10.2px; line-height: 1.2; color: #1e293b; font-weight: 700; margin-bottom: 2px;
   }}
   .card-src {{
     font-size: 7.4px; font-weight: 800; color: #475569; text-transform: uppercase;
@@ -617,15 +597,15 @@ def build_broadsheet_html() -> str:
 
   /* MID ROWS (5 COLS x 2) */
   .mid-grid {{
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; min-height: 0; overflow: hidden;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; min-height: 0; overflow: hidden;
   }}
   .mid-title {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 12.6px; font-weight: 900; line-height: 1.11; color: #000000; margin-bottom: 1.5px;
-    letter-spacing: -0.2px;
+    font-size: 17px; font-weight: 900; line-height: 1.1; color: #000000; margin-bottom: 1.5px;
+    letter-spacing: -0.3px;
   }}
   .mid-body {{
-    font-size: 8.3px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
+    font-size: 9.2px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
   }}
 
   /* BOTTOM SECTION: MAP + 22 WIRES */
@@ -685,7 +665,7 @@ def build_broadsheet_html() -> str:
 <body>
 <div class="page">
   <div class="masthead">
-    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 13 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
+    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 11 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
     <div class="mast-date">Wednesday 25 November 2026</div>
     <div class="mast-line3">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% below 5,000 · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+ · Java gold mine flood traps 17</div>
   </div>
@@ -711,16 +691,17 @@ def build_broadsheet_html() -> str:
       </div>
       {build_world_map_svg()}
       <div class="region-legend">
-        <div>● <b>Americas (7):</b> #1, 25–29 &nbsp; ● <b>Europe (7):</b> #4, 6, 15, 17–20, 35</div>
-        <div>● <b>MidEast &amp; Africa (10):</b> #5, 10–14, 21–24 &nbsp; ● <b>Asia/Oceania (11):</b> #2–3, 7–9, 16, 30–33</div>
-        <div>● <b>How Sure:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
+        <div>● <b>Americas 6:</b> #1, 25–29 &nbsp; ● <b>Europe 8:</b> #4, 6, 15, 17–20, 35</div>
+        <div>● <b>MidEast &amp; N.Africa 5:</b> #5, 10–11, 13–14 &nbsp; ● <b>Sub-Sahara 5:</b> #12, 21–24</div>
+        <div>● <b>Asia 8:</b> #2–3, 8–9, 16, 31–33 &nbsp; ● <b>Oceania &amp; Space 3:</b> #7, 30, 34</div>
+        <div>● <b>How sure:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
       </div>
     </div>
 
     <div class="wires-box">
       <div class="box-head">
-        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 22 MORE DATED &amp; SOURCED WORLD WIRES</span>
-        <span style="color:#047857">STORIES 14–35</span>
+        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 24 MORE DATED &amp; SOURCED WORLD WIRES</span>
+        <span style="color:#047857">STORIES 12–35</span>
       </div>
       <div class="wires-cols">
         <div class="brief-col">{render_briefs(BRIEFS_COL_1)}</div>

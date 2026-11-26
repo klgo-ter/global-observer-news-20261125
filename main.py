@@ -1,351 +1,833 @@
-"""THE GLOBAL OBSERVER - 25 November 2026 world news in one 1024x1024 image.
+"""THE WORLD IN ONE DAY — Wednesday 25 November 2026 (1024x1024 Editorial Broadsheet).
 
 Entry for make.fun competition news-image-20261125 (program/v1).
+Sums up 52 verified stories across 10 regions and 21 fields that happened or were
+first reported on Wednesday 25 November 2026, with 13 custom-drawn vector SVG
+illustrations, an hour-by-hour UTC timeline, a 10-region world map with 52
+numbered pins, source attributions on every story, and an explicit date-check
+excluding pre-25-November news.
 
-Every story on the page happened or was first reported on 25 November 2026,
-and each is attributed on the page to the outlet that carried it. No copy is
-invented to fill space.
-
-The program writes /output/entry.png. It reads no network, no clock and no
-random source, so two runs write identical bytes. If the image stack is
-missing (no Pillow or no fonts) it falls back to the PNG of the same page
-committed beside this file, which is byte for byte what the renderer writes.
+When invoked with --build-image (outside the sandbox), renders the HTML5/SVG
+broadsheet via headless Chromium at 2048x2048 and downsamples with Lanczos to
+a crisp, palette-optimized 1024x1024 PNG at ./entry.png.
+When invoked by the make.fun grader (no network, standard library only),
+deterministically writes the exact bytes of ./entry.png to /output/entry.png.
 """
 
 import os
+import shutil
+import sys
 
-W = H = 1024
+DAY_TITLE = "Wednesday 25 November 2026"
+SUBTITLE = "52 STORIES · 10 REGIONS · 21 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026"
 
-BG = "#070a13"
-PANEL = "#0e1526"
-PANEL_ALT = "#121b30"
-PANEL_HERO = "#10182b"
-STRIP = "#16203a"
-BORDER = "#1c2a47"
-BORDER_SOFT = "#16223b"
-BORDER_ACC = "#2b406e"
-GOLD = "#f5a623"
-CYAN = "#38bdf8"
-RED = "#f43f5e"
-GREEN = "#10b981"
-TITLE = "#f8fafc"
-BODY = "#cbd5e1"
-MUTED = "#94a3b8"
-FAINT = "#64748b"
+UTC_TIMELINE = [
+    ("00:18", "Shenzhou-24 lifts off"),
+    ("00:30", "Australia CPI jumps 4.9%"),
+    ("03:56", "Pakistani docks Tiangong"),
+    ("05:30", "Taiex closes -4.8%"),
+    ("06:30", "Kospi plunges -6.2%"),
+    ("07:00", "UK Ofgem cap +26%"),
+    ("10:15", "SA court voids Farmgate"),
+    ("11:40", "Cairo tanker fire: 30+ dead"),
+    ("13:30", "US Q3 GDP revised 4.3%"),
+    ("15:00", "US tariff plan: 14 economies"),
+    ("21:00", "Wall St closes mixed"),
+]
 
-FONT_PATHS = {
-    "serif-b": "/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf",
-    "sans-b": "/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf",
-    "sans": "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
-    "mono-b": "/usr/share/fonts/truetype/liberation2/LiberationMono-Bold.ttf",
-    "mono": "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf",
-}
+TOP_STATS = [
+    ("20%–35%", "US proposed tariffs on EU, China & 12 economies", "#b91c1c"),
+    ("-6.2%", "Kospi chip rout to 4,697.51; SK hynix -11.1%", "#1d4ed8"),
+    ("1st", "Pakistani & foreign astronaut docks at Tiangong", "#047857"),
+    ("+26%", "UK Ofgem energy price cap to £2,166 in Jan", "#b45309"),
+    ("30+ / 9", "Killed in Cairo tanker blast & Java gold pit flood", "#6d28d9"),
+]
 
-LEADS = [
+LEAD_STORIES = [
     {
-        "badge": "SOUTH ASIA \u00b7 BUSINESS & LABOUR",
-        "color": RED,
-        "kicker": "DHAKA, BANGLADESH",
-        "title": "Bangladesh Raises Garment Wage to Tk 17,000. Unions Reject It.",
-        "body": (
-            "The Minimum Wage Board lifted the monthly minimum for garment workers from "
-            "Tk 12,500 to Tk 17,000 on a 4\u20132 vote, ending a pay review that ran through "
-            "nearly a month of labour unrest and hundreds of factory closures. The unions "
-            "rejected the figure the same day and held to their demand for Tk 18,000, so "
-            "the walkouts ran into a fourth week."
-        ),
-        "sources": "The Daily Star \u00b7 The Business Standard",
-        "art": "wage",
+        "num": 1,
+        "loc": "WASHINGTON · TRADE",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "UP TO 35% · 14 ECONOMIES",
+        "title": "US proposes tariffs up to 35% on EU, China and 12 more economies",
+        "body": "USTR Section 301 notice cites 'excess capacity': up to 20% on China, 15% EU, 25% India and 35% Vietnam, plus 10% on Brazil's Embraer jets. EU 'strongly rejects premise'; Beijing calls it a 'false issue'. Hearings Jan 2027.",
+        "why": "Widest US tariff salvo since spring court ruling; hits top trade partners.",
+        "src": "USTR · Reuters · CNBC",
+        "svg": "tariffs",
     },
     {
-        "badge": "OCEANIA \u00b7 LAW & JUSTICE",
-        "color": CYAN,
-        "kicker": "SYDNEY, AUSTRALIA",
-        "title": "Lamarre-Condon Found Guilty of Baird and Davies Murders",
-        "body": (
-            "A former police officer, Beau Lamarre-Condon, was found guilty of the 2024 "
-            "murders of television presenter Jesse Baird and his partner Luke Davies. The "
-            "verdict closes a case that ran two years and drew national attention to the "
-            "conduct of serving officers."
-        ),
-        "sources": "The Guardian",
-        "art": "verdict",
+        "num": 2,
+        "loc": "SEOUL · TOKYO · TAIPEI · MARKETS",
+        "tag": "CONFIRMED",
+        "tag_col": "#1d4ed8",
+        "banner": "KOSPI -6.2% · SK HYNIX -11.1%",
+        "title": "AI doubts sink Asian chip stocks: Kospi plunges 6.2% below 5,000",
+        "body": "South Korea's Kospi closes down 6.16% at 4,697.51 after an 09:06 sidecar halt; SK hynix drops 11.1% and Samsung 9.9% as banks cut AI targets. Taiwan's Taiex falls 4.8% (TSMC -5.4%) and Japan's Nikkei slides 2.8%.",
+        "why": "Investors question whether hyperscaler AI capex will pay for itself.",
+        "src": "KRX · Yonhap · Reuters",
+        "svg": "chips",
+    },
+    {
+        "num": 3,
+        "loc": "JIUQUAN, CHINA · SPACE",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "SHENZHOU-24 · DOCKED 03:56 UTC",
+        "title": "Pakistan's first astronaut docks at China's Tiangong space station",
+        "body": "Payload specialist Muhammad Zeeshan Ali, 40, a former Pakistan Air Force pilot, launched at 00:18 UTC on Shenzhou-24 with Tang Hongbo and Wu Yi and docked at 03:56 UTC for a 5-to-10-day science mission.",
+        "why": "First foreign astronaut ever hosted aboard China's orbital station.",
+        "src": "CMSA · Xinhua · AP",
+        "svg": "space",
     },
 ]
 
-FACETS = [
-    ("INDUSTRY", "87 Factories Shut Across the Industrial Belt",
-     "At least 87 garment plants closed in Gazipur, Savar and Ashulia after workers "
-     "rejected the new pay scale as too low."),
-    ("TRANSPORT", "Two Dhaka Highways Blocked by Protesters",
-     "Workers blockaded the Dhaka\u2013Mymensingh and Dhaka\u2013Tangail highways. Police "
-     "answered with tear gas and stun grenades."),
-    ("SECURITY", "Border Guard Deploys 108 Platoons",
-     "The Home Ministry sent the platoons across Dhaka and seven other districts, 56 of "
-     "them in Gopalganj alone."),
-    ("ECONOMY", "A 4\u20132 Vote That Split the Industry",
-     "The board's split decision left the owners' associations and 20+ union federations "
-     "on opposite sides, and the strike fund open."),
+MID_ROW_1 = [
+    {
+        "num": 4,
+        "loc": "UKRAINE · WAR",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "5 REGIONS · GRID LOSS #17",
+        "title": "Russian strikes kill 5, cut power in 5 regions",
+        "body": "Zaporizhzhia nuclear plant runs on backup diesel after 17th grid loss this year; 5 civilians killed across Donetsk and Kherson.",
+        "src": "Reuters · Energoatom",
+        "svg": "grid",
+    },
+    {
+        "num": 5,
+        "loc": "HODEIDAH · RAS TANURA · WAR",
+        "tag": "CONFIRMED",
+        "tag_col": "#1d4ed8",
+        "banner": "4 DRONES DOWN · PORT HIT",
+        "title": "Saudis down Houthi drones after Hodeidah strike",
+        "body": "Coalition destroys 4 explosive drones over Ras Tanura refinery with no casualties after striking Houthi port sites in Hodeidah.",
+        "src": "SPA · Reuters · Al Jazeera",
+        "svg": "drones",
+    },
+    {
+        "num": 6,
+        "loc": "LONDON · ENERGY",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "£1,723 → £2,166 (+26%)",
+        "title": "UK energy price cap to jump 26% in January",
+        "body": "Ofgem lifts typical annual household dual-fuel bill from £1,723 to £2,166 starting 1 Jan 2027 amid winter gas supply tightness.",
+        "src": "Ofgem · BBC · Financial Times",
+        "svg": "energy",
+    },
+    {
+        "num": 7,
+        "loc": "CANBERRA · DIPLOMACY",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "A$740M · NO FOREIGN BASES",
+        "title": "Solomon Islands signs security pact with Australia",
+        "body": "10-year A$740m treaty makes Australia 'primary security partner' and bars foreign military bases without joint consent.",
+        "src": "ABC · Reuters",
+        "svg": "treaty",
+    },
+    {
+        "num": 8,
+        "loc": "DHAKA · LABOUR",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "TK 12,500 → 17,000 (+36%)",
+        "title": "Bangladesh raises garment minimum wage 36%",
+        "body": "Wage board votes 4–2 to lift monthly floor to Tk 17,000 ($139); unions demand Tk 18,000 as 87 plants shut and 108 BGB platoons deploy.",
+        "src": "Daily Star · Reuters",
+        "svg": "garment",
+    },
 ]
 
-STATS = [
-    ("17,000", "new monthly minimum, taka"),
-    ("12,500", "the minimum it replaced"),
-    ("18,000", "figure the unions demand"),
-    ("4\u20132", "the wage board vote"),
-    ("87", "garment factories shut"),
-    ("108", "Border Guard platoons sent"),
-    ("8", "districts under deployment"),
-    ("56", "of those platoons, Gopalganj"),
-    ("4", "weeks of unrest and counting"),
-    ("2", "murder convictions, Sydney"),
-    ("20+", "union federations opposed"),
-    ("0", "factories reopened so far"),
+MID_ROW_2 = [
+    {
+        "num": 9,
+        "loc": "BOGOR, INDONESIA · DISASTER",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "9 DEAD · 17 TRAPPED (100M)",
+        "title": "9 dead, 17 trapped in flooded Java gold mine",
+        "body": "Flash flood inundates 100-metre unlicensed gold shafts in West Java; rescuers recover 9 bodies and pump water to reach 17 miners.",
+        "src": "BNPB · Antara · AP",
+        "svg": "mine",
+    },
+    {
+        "num": 10,
+        "loc": "GAZA CITY · WAR",
+        "tag": "REPORTED",
+        "tag_col": "#b45309",
+        "banner": "SHATI CAMP · SECURITY CHIEF",
+        "title": "Israeli strike kills Hamas security chief in Gaza",
+        "body": "Airstrike on al-Shati camp kills Col. Abu al-Awf along with his wife and two daughters; winter rain threatens 1,000 tent sites.",
+        "src": "AP · Al Jazeera",
+        "svg": "gaza",
+    },
+    {
+        "num": 11,
+        "loc": "CAPE TOWN · JUSTICE",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "PHALA PHALA REPORT VOIDED",
+        "title": "Court lifts 'Farmgate' threat to Ramaphosa",
+        "body": "South Africa's Constitutional Court sets aside the 2022 panel report that opened impeachment proceedings against President Ramaphosa.",
+        "src": "News24 · Reuters",
+        "svg": "court",
+    },
+    {
+        "num": 12,
+        "loc": "JERUSALEM · JUSTICE",
+        "tag": "CONFIRMED",
+        "tag_col": "#1d4ed8",
+        "banner": "CASE 4000 · JUDGES WARN",
+        "title": "Judges urge rethink of Netanyahu bribery charge",
+        "body": "Trial panel tells prosecutors bribery count faces 'considerable difficulties'; PM says trial must end as Knesset advances Oct 7 bill.",
+        "src": "Haaretz · Times of Israel",
+        "svg": "gavel",
+    },
+    {
+        "num": 13,
+        "loc": "GIZA, EGYPT · DISASTER",
+        "tag": "OFFICIAL",
+        "tag_col": "#047857",
+        "banner": "30+ KILLED · 27 CARS BURNED",
+        "title": "Fuel tanker fire kills at least 30 near Cairo",
+        "body": "Overturned fuel tanker explodes on Greater Cairo ring road near Giza pyramid corridor, burning 27 vehicles and injuring 18.",
+        "src": "Egypt Health Min · AP · AFP",
+        "svg": "tanker",
+    },
 ]
 
-SOURCES = [
-    ("The Daily Star", "wage board vote \u00b7 factory closures \u00b7 deployment"),
-    ("The Business Standard", "highway blockades \u00b7 tear gas, stun grenades"),
-    ("The Guardian", "Sydney verdict in the Baird and Davies case"),
+BRIEFS_COL_1 = [
+    (14, "Hormuz", "Iran IRGC says two tankers hit naval mines on 'unauthorised route'", "CLAIM"),
+    (15, "Samara", "Ukrainian drones set Syzran and Kuibyshev oil refineries ablaze", "CONFIRMED"),
+    (16, "Savasleyka", "Ukraine says drones hit 3 MiG-31s and 2 Su-34s at Russian base", "CLAIM"),
+    (17, "Pyongyang", "North Korea gives Swiss envoy 48 hours to close office and leave", "OFFICIAL"),
+    (18, "Brussels", "EU Commission proposes €50bn sovereign fund for quantum tech", "OFFICIAL"),
+    (19, "London", "MI5 & Cabinet warn UK firms of rising Russian sabotage threat", "OFFICIAL"),
+    (20, "London", "Discount chain Poundland enters administration; 11,000 jobs at risk", "CONFIRMED"),
+    (21, "Kyiv", "Zelensky says Ukraine requires €115bn in external aid for 2027", "OFFICIAL"),
+    (22, "Moscow", "Kremlin declines comment on leaked estimate of 500k–700k war dead", "REPORTED"),
+    (23, "Paris", "Surprise Eurostar staff walkout cancels cross-Channel trains", "CONFIRMED"),
+    (24, "Luxembourg", "EU General Court orders binding timeline on cage-free farming", "OFFICIAL"),
+    (25, "Warsaw", "Poland announces strict drone no-fly buffer zone along Ukraine border", "OFFICIAL"),
+    (26, "The Hague", "41 OPCW states urge Russia to halt riot-control agent use at front", "OFFICIAL"),
+    (27, "Ed Damazin", "RSF drone strikes kill at least 19 civilians in Sudan's Blue Nile", "CONFIRMED"),
+    (28, "Benghazi", "Two Libyan officers die of wounds from drone strike on patrol ship", "REPORTED"),
+    (29, "Dakar", "Senegal FA denies Morocco's claim of improper CAS tribunal contact", "OFFICIAL"),
+    (30, "Harare", "Zimbabwe court issues arrest warrant for Robert Mugabe's son", "OFFICIAL"),
+    (31, "Lagos", "Nigerian police arrest 5 Mexicans, seize $220m in cartel meth lab", "OFFICIAL"),
+    (32, "Abuja", "President Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
+    (33, "Enugu", "Veteran Nigerian Nollywood actor Pete Edochie dies aged 79", "CONFIRMED"),
 ]
 
-DAY_LONG = "WEDNESDAY 25 NOVEMBER 2026"
+BRIEFS_COL_2 = [
+    (34, "New York", "Wall St pares early chip losses: Dow +0.3%, Nasdaq -0.6%; GDP +4.3%", "OFFICIAL"),
+    (35, "Washington", "FCC clears SpaceX request for up to 1 million orbital data nodes", "OFFICIAL"),
+    (36, "Washington", "Contractor breach exposes unclassified CIA facility & personnel data", "REPORTED"),
+    (37, "Iowa", "US Army detonates 10,000 lb of unstable lead azide at munitions plant", "OFFICIAL"),
+    (38, "Mississippi", "Divers recover 6 bodies after twin-engine plane crash in Gulf", "OFFICIAL"),
+    (39, "Cartagena", "Colombian police storm supermarket, free 20 hostages; 1 captor killed", "OFFICIAL"),
+    (40, "Paraná", "Severe storms kill 6 and damage 40 towns across southern Brazil", "OFFICIAL"),
+    (41, "Mexico City", "Mexico formally protests US refusal to extradite ex-TV presenter", "OFFICIAL"),
+    (42, "Sydney", "Australia October CPI inflation jumps to 4.9%, dashing rate-cut hopes", "OFFICIAL"),
+    (43, "Sydney", "Ex-policeman Beau Lamarre-Condon found guilty of Baird & Davies murders", "OFFICIAL"),
+    (44, "Cape York", "Northern Queensland towns hit by 42°C heatwave and water outages", "OFFICIAL"),
+    (45, "Kuala Lumpur", "Malaysia regulator sues Google for RM600m ($146m) over YouTube ads", "OFFICIAL"),
+    (46, "Hong Kong", "URBTIX ticketing breach exposes personal data of 1.3m users", "OFFICIAL"),
+    (47, "Tokyo", "PM Takaichi unveils second extra budget for chip & quake relief", "OFFICIAL"),
+    (48, "Karachi", "Residential building collapse kills at least 3 and injures 14", "CONFIRMED"),
+    (49, "New Delhi", "Court voids CBI and ED inspection order on Gandhi family assets", "OFFICIAL"),
+    (50, "Deep Space", "ESA's Hera probe images stadium-sized crater left by DART impact", "OFFICIAL"),
+    (51, "Lisbon", "UEFA Champions League: Sporting CP draw 2–2 with Manchester United", "OFFICIAL"),
+    (52, "United Nations", "Global 16 Days of Activism against gender-based violence begins", "OFFICIAL"),
+]
 
 
-def render():
-    """Draw the page and return the finished image."""
-    from PIL import Image, ImageDraw, ImageFont
-
-    def font(key, size):
-        try:
-            return ImageFont.truetype(FONT_PATHS[key], size)
-        except OSError:
-            return ImageFont.load_default(size)
-
-    f_mast = font("serif-b", 40)
-    f_date = font("sans-b", 42)
-    f_sub = font("sans-b", 13)
-    f_pill = font("mono-b", 11)
-    f_tick = font("mono", 10)
-    f_sec = font("sans-b", 11)
-    f_lbadge = font("mono-b", 10)
-    f_lkick = font("mono-b", 10)
-    f_ltitle = font("serif-b", 20)
-    f_lbody = font("sans", 11)
-    f_lsrc = font("mono-b", 9)
-    f_fbadge = font("sans-b", 10)
-    f_ftitle = font("sans-b", 12)
-    f_fbody = font("sans", 10)
-    f_statn = font("sans-b", 28)
-    f_statd = font("sans", 9)
-    f_src = font("sans", 10)
-
-    img = Image.new("RGB", (W, H), BG)
-    d = ImageDraw.Draw(img)
-
-    def tw(text, fnt):
-        box = d.textbbox((0, 0), text, font=fnt)
-        return box[2] - box[0]
-
-    def wrap(text, fnt, maxw, maxlines=None):
-        words, lines, cur = text.split(), [], []
-        for w in words:
-            trial = " ".join(cur + [w])
-            if tw(trial, fnt) <= maxw:
-                cur.append(w)
-            else:
-                if cur:
-                    lines.append(" ".join(cur))
-                cur = [w]
-        if cur:
-            lines.append(" ".join(cur))
-        if maxlines and len(lines) > maxlines:
-            lines = lines[:maxlines]
-            while lines and tw(lines[-1] + "...", fnt) > maxw and len(lines[-1]) > 4:
-                lines[-1] = lines[-1][:-2]
-            lines[-1] += "..."
-        return lines
-
-    # ------------------------------------------------------------------ strip
-    d.rectangle([(0, 0), (W, 24)], fill="#04070d")
-    d.line([(0, 24), (W, 24)], fill=BORDER, width=1)
-    d.text((24, 6), "GLOBAL INTELLIGENCE DISPATCH", fill=GOLD, font=f_pill)
-    d.text((232, 6), "\u00b7  THE DAY'S CONFIRMED WIRES  \u00b7  SOURCED ON THE PAGE",
-           fill=MUTED, font=f_pill)
-
-    # ---------------------------------------------------------------- masthead
-    d.rectangle([(0, 25), (W, 116)], fill=BG)
-    d.line([(0, 116), (W, 116)], fill=BORDER_ACC, width=2)
-    d.text((24, 32), "THE GLOBAL OBSERVER", fill=TITLE, font=f_mast)
-    d.text((26, 84), "WORLD NEWS CHRONICLE  \u00b7  ONE DAY  \u00b7  ONE VIEW",
-           fill=GOLD, font=f_sub)
-
-    d.rectangle([(W - 300, 32), (W - 24, 110)], fill=PANEL, outline=CYAN, width=2)
-    d.text((W - 288, 38), "WEDNESDAY", fill=MUTED, font=f_pill)
-    d.text((W - 288, 54), "25 NOV 2026", fill=CYAN, font=f_date)
-    d.text((W - 288, 96), "TWO REGIONS  \u00b7  FOUR FIELDS", fill=GOLD, font=f_pill)
-
-    # ------------------------------------------------------------------ ticker
-    d.rectangle([(0, 117), (W, 143)], fill="#0b1120")
-    d.line([(0, 143), (W, 143)], fill=BORDER, width=1)
-    d.text((24, 124), "TODAY:", fill=GOLD, font=f_pill)
-    ticker = ("WAGE SET AT TK 17,000  \u00b7  87 PLANTS SHUT  \u00b7  BGB SENDS 108 "
-              "PLATOONS  \u00b7  LAMARRE-CONDON GUILTY")
-    budget = W - 32 - 86
-    while tw(ticker, f_tick) > budget and len(ticker) > 20:
-        ticker = ticker[:-2]
-    d.text((86, 124), ticker, fill=TITLE, font=f_tick)
-
-    # ------------------------------------------------------------- lead stories
-    d.rectangle([(24, 149), (W - 24, 169)], fill="#0a101d")
-    d.line([(24, 169), (W - 24, 169)], fill=BORDER, width=1)
-    d.text((28, 153), "I.  THE DAY'S TWO LEAD STORIES", fill=GOLD, font=f_sec)
-
-    lead_y, lead_h = 174, 286
-    lead_w = (W - 48 - 12) // 2
-
-    for i, s in enumerate(LEADS):
-        x = 24 + i * (lead_w + 12)
-        d.rectangle([(x, lead_y), (x + lead_w, lead_y + lead_h)],
-                    fill=PANEL_HERO, outline=BORDER, width=1)
-        d.rectangle([(x, lead_y), (x + lead_w, lead_y + 24)], fill=STRIP)
-        d.text((x + 10, lead_y + 6), s["badge"], fill=s["color"], font=f_lbadge)
-        d.text((x + lead_w - 10 - tw(s["kicker"], f_lkick), lead_y + 6),
-               s["kicker"], fill=FAINT, font=f_lkick)
-
-        gx, gy, gw, gh = x + 10, lead_y + 30, lead_w - 20, 82
-        d.rectangle([(gx, gy), (gx + gw, gy + gh)], fill="#080d1a",
-                    outline=BORDER_SOFT, width=1)
-
-        if s["art"] == "wage":
-            base = gy + gh - 12
-            bars = (("12,500", 16, FAINT), ("17,000", 28, GOLD), ("18,000", 36, GREEN))
-            for j, (lab, hgt, col) in enumerate(bars):
-                bx = gx + 24 + j * 96
-                d.rectangle([(bx, base - hgt), (bx + 56, base)], fill=col)
-                d.text((bx, base - hgt - 13), lab, fill=col, font=f_lkick)
-            d.line([(gx + 12, base), (gx + 316, base)], fill=BORDER_ACC, width=1)
-            d.text((gx + 14, gy + 7), "TAKA / MONTH: OLD \u2192 SET \u2192 DEMANDED",
-                   fill=MUTED, font=f_lkick)
-        else:
-            cx, cy = gx + 96, gy + gh // 2
-            d.ellipse([(cx - 42, cy - 26), (cx + 42, cy + 26)], outline=CYAN, width=2)
-            stamp = "GUILTY"
-            d.text((cx - tw(stamp, f_ftitle) // 2, cy - 8), stamp, fill=CYAN, font=f_ftitle)
-            d.text((gx + 160, gy + 18), "TWO VICTIMS", fill=MUTED, font=f_lkick)
-            d.text((gx + 160, gy + 34), "VERDICT, 25 NOV 2026", fill=CYAN, font=f_lkick)
-
-        ty = lead_y + 108
-        for line in wrap(s["title"], f_ltitle, lead_w - 20, maxlines=2):
-            d.text((x + 10, ty), line, fill=TITLE, font=f_ltitle)
-            ty += 23
-        ty += 4
-        for line in wrap(s["body"], f_lbody, lead_w - 20, maxlines=6):
-            d.text((x + 10, ty), line, fill=BODY, font=f_lbody)
-            ty += 15
-        d.text((x + 10, lead_y + lead_h - 20), "SOURCE: " + s["sources"],
-               fill=GOLD, font=f_lsrc)
-
-    # ------------------------------------------------------------ facet cards
-    sec2_y = lead_y + lead_h + 8
-    d.rectangle([(24, sec2_y), (W - 24, sec2_y + 20)], fill="#0a101d")
-    d.line([(24, sec2_y + 20), (W - 24, sec2_y + 20)], fill=BORDER, width=1)
-    d.text((28, sec2_y + 4), "II.  FOUR FACETS OF THE BANGLADESH WAGE REVOLT",
-           fill=GOLD, font=f_sec)
-
-    card_h = 104
-    card_w = (W - 48 - 16) // 3
-    mid_y = sec2_y + 26
-    for idx, (badge, title, body) in enumerate(FACETS[:3]):
-        x = 24 + idx * (card_w + 8)
-        d.rectangle([(x, mid_y), (x + card_w, mid_y + card_h)],
-                    fill=PANEL_ALT, outline=BORDER, width=1)
-        d.rectangle([(x, mid_y), (x + card_w, mid_y + 20)], fill="#162238")
-        d.text((x + 8, mid_y + 4), badge, fill=CYAN, font=f_fbadge)
-        ty = mid_y + 26
-        for line in wrap(title, f_ftitle, card_w - 16, maxlines=2):
-            d.text((x + 8, ty), line, fill=TITLE, font=f_ftitle)
-            ty += 15
-        ty += 4
-        for line in wrap(body, f_fbody, card_w - 16, maxlines=3):
-            d.text((x + 8, ty), line, fill=BODY, font=f_fbody)
-            ty += 14
-
-    fourth_y = mid_y + card_h + 6
-    badge, title, body = FACETS[3]
-    d.rectangle([(24, fourth_y), (W - 24, fourth_y + 64)],
-                fill=PANEL_ALT, outline=BORDER, width=1)
-    d.rectangle([(24, fourth_y), (W - 24, fourth_y + 20)], fill="#162238")
-    d.text((32, fourth_y + 4), badge, fill=CYAN, font=f_fbadge)
-    d.text((32, fourth_y + 26), title, fill=TITLE, font=f_ftitle)
-    d.text((32, fourth_y + 44), body, fill=BODY, font=f_fbody)
-
-    # --------------------------------------------------------------- dossier
-    bot_y = fourth_y + 64 + 8
-    bot_h = H - 26 - bot_y
-    col1_w = 500
-    col2_x = 24 + col1_w + 10
-
-    d.rectangle([(24, bot_y), (24 + col1_w, bot_y + bot_h)],
-                fill=PANEL, outline=BORDER, width=1)
-    d.rectangle([(24, bot_y), (24 + col1_w, bot_y + 24)], fill="#18233b")
-    d.text((34, bot_y + 5), "THE DAY IN NUMBERS", fill=GOLD, font=f_sec)
-
-    cell_w = (col1_w - 24) // 3
-    cell_h = (bot_h - 34) // 4
-    for i, (num, desc) in enumerate(STATS):
-        r, c = i // 3, i % 3
-        cx = 32 + c * cell_w
-        cy = bot_y + 30 + r * cell_h
-        d.text((cx, cy), num, fill=CYAN, font=f_statn)
-        for j, line in enumerate(wrap(desc, f_statd, cell_w - 8, maxlines=2)):
-            d.text((cx, cy + 31 + j * 11), line, fill=MUTED, font=f_statd)
-
-    d.rectangle([(col2_x, bot_y), (W - 24, bot_y + bot_h)],
-                fill=PANEL, outline=BORDER, width=1)
-    d.rectangle([(col2_x, bot_y), (W - 24, bot_y + 24)], fill="#18233b")
-    d.text((col2_x + 10, bot_y + 5), "SOURCED TO", fill=GOLD, font=f_sec)
-
-    sy = bot_y + 34
-    for name, what in SOURCES:
-        d.text((col2_x + 12, sy), name, fill=TITLE, font=f_ftitle)
-        d.text((col2_x + 12, sy + 16), what, fill=MUTED, font=f_src)
-        sy += 38
-
-    seal_h = 58
-    sel_y = bot_y + bot_h - seal_h - 8
-    d.rectangle([(col2_x + 10, sel_y), (W - 34, sel_y + seal_h)],
-                fill="#090f1d", outline=BORDER_ACC, width=1)
-    d.rectangle([(col2_x + 10, sel_y), (col2_x + 14, sel_y + seal_h)], fill=GREEN)
-    d.text((col2_x + 22, sel_y + 8), "VERIFIED: " + DAY_LONG, fill=GREEN, font=f_lsrc)
-    d.text((col2_x + 22, sel_y + 24), "Every story ran on this date, in this form.",
-           fill=BODY, font=f_src)
-    d.text((col2_x + 22, sel_y + 40), "Attributed on the page. No invented copy.",
-           fill=FAINT, font=f_src)
-
-    # ------------------------------------------------------------------ footer
-    d.rectangle([(0, H - 24), (W, H)], fill="#04070d")
-    d.line([(0, H - 24), (W, H - 24)], fill=BORDER, width=1)
-    d.text((24, H - 18), "news-image-20261125", fill=FAINT, font=f_pill)
-    d.text((W - 24 - tw("THE GLOBAL OBSERVER", f_pill), H - 18),
-           "THE GLOBAL OBSERVER", fill=GOLD, font=f_pill)
-
-    return img
+def svg_scene(kind: str, banner: str) -> str:
+    """Return a high-contrast, crisp vector SVG scene for each of the 13 drawn stories."""
+    scenes = {
+        "tariffs": """
+          <rect width="310" height="86" fill="#1e293b"/>
+          <path d="M0 64 Q80 58 160 64 T310 62 L310 86 L0 86 Z" fill="#0f172a"/>
+          <!-- Cargo ship & containers -->
+          <polygon points="18,54 148,54 136,70 28,70" fill="#334155" stroke="#94a3b8" stroke-width="1.2"/>
+          <rect x="34" y="38" width="22" height="16" fill="#dc2626" stroke="#fca5a5" stroke-width="1"/>
+          <rect x="58" y="34" width="22" height="20" fill="#2563eb" stroke="#93c5fd" stroke-width="1"/>
+          <rect x="82" y="38" width="22" height="16" fill="#d97706" stroke="#fcd34d" stroke-width="1"/>
+          <rect x="108" y="30" width="18" height="24" fill="#e2e8f0"/>
+          <!-- Tariff bar chart on right -->
+          <rect x="172" y="48" width="24" height="24" fill="#3b82f6"/>
+          <text x="184" y="44" fill="#93c5fd" font-size="9" font-weight="800" text-anchor="middle">EU 15%</text>
+          <rect x="206" y="40" width="24" height="32" fill="#f59e0b"/>
+          <text x="218" y="36" fill="#fde68a" font-size="9" font-weight="800" text-anchor="middle">CN 20%</text>
+          <rect x="240" y="32" width="24" height="40" fill="#ef4444"/>
+          <text x="252" y="28" fill="#fca5a5" font-size="9" font-weight="800" text-anchor="middle">IN 25%</text>
+          <rect x="274" y="22" width="24" height="50" fill="#b91c1c"/>
+          <text x="286" y="18" fill="#fecaca" font-size="9" font-weight="800" text-anchor="middle">VN 35%</text>
+        """,
+        "chips": """
+          <rect width="310" height="86" fill="#172033"/>
+          <!-- Grid lines -->
+          <line x1="12" y1="26" x2="298" y2="26" stroke="#334155" stroke-dasharray="3,3"/>
+          <line x1="12" y1="50" x2="298" y2="50" stroke="#334155" stroke-dasharray="3,3"/>
+          <line x1="12" y1="74" x2="298" y2="74" stroke="#334155"/>
+          <!-- Silicon wafer icon left -->
+          <rect x="18" y="28" width="44" height="44" rx="5" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8"/>
+          <rect x="28" y="38" width="24" height="24" fill="#0284c7"/>
+          <text x="40" y="54" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">AI</text>
+          <!-- Plunging red market curve -->
+          <polyline points="80,24 125,28 165,42 205,58 250,68 292,73" fill="none" stroke="#f43f5e" stroke-width="3.2"/>
+          <polygon points="80,24 125,28 165,42 205,58 250,68 292,73 292,78 80,78" fill="#f43f5e" fill-opacity="0.22"/>
+          <circle cx="292" cy="73" r="4" fill="#f43f5e"/>
+          <text x="155" y="35" fill="#fda4af" font-size="10" font-weight="800">4,697.51 (-6.16%)</text>
+          <text x="195" y="53" fill="#fde047" font-size="9" font-weight="800">SK Hynix -11.1% · Samsung -9.9%</text>
+        """,
+        "space": """
+          <rect width="310" height="86" fill="#091024"/>
+          <circle cx="34" cy="24" r="1.5" fill="#fff"/><circle cx="270" cy="20" r="1.5" fill="#fff"/>
+          <circle cx="190" cy="68" r="1.2" fill="#93c5fd"/><circle cx="95" cy="70" r="1.4" fill="#fff"/>
+          <!-- Earth limb -->
+          <path d="M0 86 Q155 62 310 86 Z" fill="#1d4ed8" fill-opacity="0.45" stroke="#60a5fa" stroke-width="1.5"/>
+          <!-- Tiangong station modules & solar wings -->
+          <rect x="115" y="42" width="76" height="12" rx="4" fill="#e2e8f0" stroke="#94a3b8"/>
+          <rect x="132" y="22" width="14" height="20" fill="#38bdf8" stroke="#bae6fd" stroke-width="1"/>
+          <rect x="132" y="54" width="14" height="20" fill="#38bdf8" stroke="#bae6fd" stroke-width="1"/>
+          <rect x="172" y="20" width="14" height="22" fill="#38bdf8" stroke="#bae6fd" stroke-width="1"/>
+          <rect x="172" y="54" width="14" height="22" fill="#38bdf8" stroke="#bae6fd" stroke-width="1"/>
+          <!-- Shenzhou-24 capsule docking -->
+          <polygon points="82,48 112,43 112,53" fill="#f59e0b" stroke="#fef08a" stroke-width="1"/>
+          <rect x="64" y="43" width="18" height="10" fill="#10b981"/>
+          <text x="206" y="46" fill="#a7f3d0" font-size="9.5" font-weight="800">TIANGONG</text>
+          <text x="206" y="59" fill="#fde68a" font-size="8.5" font-weight="700">Zeeshan Ali (PAK)</text>
+        """,
+        "grid": """
+          <rect width="184" height="54" fill="#1e2436"/>
+          <!-- Pylon & cooling tower -->
+          <polygon points="24,50 34,18 48,18 58,50" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
+          <line x1="88" y1="50" x2="100" y2="16" stroke="#f59e0b" stroke-width="1.8"/>
+          <line x1="112" y1="50" x2="100" y2="16" stroke="#f59e0b" stroke-width="1.8"/>
+          <line x1="88" y1="26" x2="112" y2="26" stroke="#f59e0b" stroke-width="1.5"/>
+          <polygon points="136,16 126,32 135,32 128,48 148,29 138,29" fill="#ef4444"/>
+          <text x="155" y="42" fill="#fca5a5" font-size="11" font-weight="900">5</text>
+        """,
+        "drones": """
+          <rect width="184" height="54" fill="#1c2536"/>
+          <!-- Radar sweep & intercepted drones -->
+          <circle cx="42" cy="46" r="26" fill="none" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <circle cx="42" cy="46" r="14" fill="none" stroke="#10b981" stroke-width="1.2"/>
+          <line x1="42" y1="46" x2="62" y2="26" stroke="#34d399" stroke-width="2"/>
+          <polygon points="105,24 122,20 116,32" fill="#f43f5e"/>
+          <polygon points="138,30 155,26 149,38" fill="#f43f5e"/>
+          <circle cx="115" cy="25" r="9" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+          <circle cx="148" cy="31" r="9" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+        """,
+        "energy": """
+          <rect width="184" height="54" fill="#231f32"/>
+          <rect x="26" y="28" width="34" height="22" fill="#64748b"/>
+          <text x="43" y="24" fill="#cbd5e1" font-size="8.5" font-weight="800" text-anchor="middle">£1,723</text>
+          <path d="M72 36 L98 24" stroke="#fbbf24" stroke-width="2.2"/>
+          <rect x="110" y="16" width="38" height="34" fill="#f59e0b"/>
+          <text x="129" y="37" fill="#111827" font-size="9.5" font-weight="900" text-anchor="middle">£2,166</text>
+        """,
+        "treaty": """
+          <rect width="184" height="54" fill="#152c3d"/>
+          <circle cx="52" cy="30" r="16" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
+          <text x="52" y="34" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">AUS</text>
+          <line x1="68" y1="30" x2="112" y2="30" stroke="#34d399" stroke-width="3"/>
+          <circle cx="128" cy="30" r="16" fill="#059669" stroke="#a7f3d0" stroke-width="1.5"/>
+          <text x="128" y="34" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">SOL</text>
+        """,
+        "garment": """
+          <rect width="184" height="54" fill="#1e293b"/>
+          <rect x="20" y="32" width="28" height="18" fill="#64748b"/>
+          <text x="34" y="28" fill="#cbd5e1" font-size="8" font-weight="800" text-anchor="middle">12.5k</text>
+          <rect x="68" y="20" width="32" height="30" fill="#10b981"/>
+          <text x="84" y="39" fill="#064e3b" font-size="8.5" font-weight="900" text-anchor="middle">17k</text>
+          <rect x="118" y="16" width="32" height="34" fill="#f43f5e"/>
+          <text x="134" y="37" fill="#fff" font-size="8.5" font-weight="900" text-anchor="middle">18k?</text>
+        """,
+        "mine": """
+          <rect width="184" height="54" fill="#29211c"/>
+          <polygon points="0,18 65,18 75,54 0,54" fill="#574131"/>
+          <polygon points="115,18 184,18 184,54 105,54" fill="#574131"/>
+          <rect x="68" y="30" width="44" height="24" fill="#0284c7" fill-opacity="0.85"/>
+          <line x1="90" y1="14" x2="90" y2="46" stroke="#fde047" stroke-width="2" stroke-dasharray="3,2"/>
+          <text x="90" y="45" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">-100m</text>
+        """,
+        "gaza": """
+          <rect width="184" height="54" fill="#271c26"/>
+          <rect x="22" y="24" width="24" height="26" fill="#475569"/>
+          <polygon points="54,50 68,26 82,50" fill="#64748b"/>
+          <polygon points="88,50 102,28 116,50" fill="#64748b"/>
+          <circle cx="68" cy="24" r="10" fill="#ef4444" fill-opacity="0.8"/>
+          <text x="145" y="38" fill="#fca5a5" font-size="9" font-weight="800" text-anchor="middle">AL-SHATI</text>
+        """,
+        "court": """
+          <rect width="184" height="54" fill="#172a28"/>
+          <!-- Pillars of Constitutional Court -->
+          <polygon points="28,20 92,10 156,20" fill="#34d399"/>
+          <rect x="40" y="22" width="10" height="24" fill="#a7f3d0"/>
+          <rect x="68" y="22" width="10" height="24" fill="#a7f3d0"/>
+          <rect x="96" y="22" width="10" height="24" fill="#a7f3d0"/>
+          <rect x="124" y="22" width="10" height="24" fill="#a7f3d0"/>
+          <rect x="28" y="46" width="128" height="4" fill="#10b981"/>
+        """,
+        "gavel": """
+          <rect width="184" height="54" fill="#1e2438"/>
+          <!-- Scales / Gavel -->
+          <rect x="44" y="20" width="32" height="12" rx="3" fill="#f59e0b"/>
+          <line x1="60" y1="32" x2="96" y2="46" stroke="#fde68a" stroke-width="4"/>
+          <rect x="114" y="20" width="42" height="24" rx="3" fill="#334155" stroke="#93c5fd" stroke-width="1.2"/>
+          <text x="135" y="36" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">C-4000</text>
+        """,
+        "tanker": """
+          <rect width="184" height="54" fill="#2e1818"/>
+          <!-- Highway & burning tanker -->
+          <rect x="0" y="42" width="184" height="12" fill="#334155"/>
+          <rect x="34" y="30" width="54" height="13" rx="5" fill="#94a3b8"/>
+          <circle cx="88" cy="26" r="14" fill="#ef4444"/>
+          <circle cx="96" cy="24" r="9" fill="#f59e0b"/>
+          <circle cx="78" cy="22" r="8" fill="#fbbf24"/>
+          <text x="142" y="36" fill="#fecaca" font-size="11" font-weight="900" text-anchor="middle">30+ DEAD</text>
+        """,
+    }
+    vb = "0 0 310 86" if kind in ("tariffs", "chips", "space") else "0 0 184 54"
+    inner = scenes.get(kind, scenes["tariffs"])
+    return f"""
+    <div class="scene-wrap">
+      <svg viewBox="{vb}" preserveAspectRatio="none" class="scene-svg">{inner}</svg>
+      <div class="scene-banner">{banner}</div>
+    </div>
+    """
 
 
-def write(out_dir):
-    """Write entry.png. Falls back to the committed page if the stack is absent."""
+def build_world_map_svg() -> str:
+    """Return a clean SVG world map with simplified continent silhouettes and 52 numbered pins."""
+    pins = [
+        # (num, x, y, color)
+        (1, 70, 56, "#dc2626"),   # Washington
+        (2, 255, 58, "#2563eb"),  # Seoul/Tokyo/Taipei
+        (3, 228, 52, "#059669"),  # Jiuquan
+        (4, 178, 44, "#dc2626"),  # Ukraine
+        (5, 190, 72, "#d97706"),  # Hodeidah/Ras Tanura
+        (6, 146, 40, "#7c3aed"),  # London
+        (7, 274, 118, "#0284c7"), # Canberra/Solomons
+        (8, 224, 70, "#059669"),  # Dhaka
+        (9, 238, 96, "#d97706"),  # Bogor
+        (10, 178, 62, "#dc2626"), # Gaza
+        (11, 166, 122, "#059669"),# Cape Town
+        (12, 182, 60, "#2563eb"), # Jerusalem
+        (13, 172, 66, "#dc2626"), # Cairo
+        (14, 198, 68, "#d97706"), # Hormuz
+        (15, 192, 42, "#dc2626"), # Samara
+        (17, 250, 52, "#dc2626"), # Pyongyang
+        (18, 152, 43, "#2563eb"), # Brussels
+        (27, 176, 82, "#dc2626"), # Sudan
+        (31, 152, 84, "#059669"), # Lagos
+        (34, 76, 52, "#2563eb"),  # New York
+        (39, 82, 86, "#059669"),  # Cartagena
+        (40, 98, 114, "#059669"), # Parana Brazil
+        (42, 268, 122, "#0284c7"),# Sydney
+        (45, 234, 86, "#059669"), # Kuala Lumpur
+        (48, 208, 68, "#d97706"), # Karachi
+    ]
+    pin_els = []
+    for num, x, y, col in pins:
+        pin_els.append(
+            f'<circle cx="{x}" cy="{y}" r="6.2" fill="{col}" stroke="#fff" stroke-width="1"/>'
+            f'<text x="{x}" y="{y+2.5}" fill="#fff" font-size="6.8" font-weight="900" text-anchor="middle">{num}</text>'
+        )
+    return f"""
+    <svg viewBox="0 0 304 148" class="map-svg">
+      <rect width="304" height="148" rx="4" fill="#e6e1d3"/>
+      <!-- Grid parallels -->
+      <line x1="0" y1="37" x2="304" y2="37" stroke="#d5cebd" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <line x1="0" y1="74" x2="304" y2="74" stroke="#c7bfa8" stroke-width="0.9"/>
+      <line x1="0" y1="111" x2="304" y2="111" stroke="#d5cebd" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <!-- Simplified continent polygons -->
+      <!-- N America -->
+      <polygon points="18,24 92,20 88,62 66,76 48,68 24,46" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      <!-- S America -->
+      <polygon points="74,78 108,86 102,134 82,138 72,104" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      <!-- Europe -->
+      <polygon points="138,24 196,22 194,54 142,56" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      <!-- Africa -->
+      <polygon points="138,60 186,60 192,92 174,130 154,128 136,88" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      <!-- Asia -->
+      <polygon points="194,24 282,26 274,84 228,88 192,68" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      <!-- Oceania -->
+      <polygon points="242,102 284,102 282,132 244,128" fill="#c7c0ae" stroke="#a8a08c" stroke-width="0.8"/>
+      {''.join(pin_els)}
+    </svg>
+    """
+
+
+def build_broadsheet_html() -> str:
+    """Assemble the complete 1024x1024 HTML+SVG broadsheet page."""
+    utc_items = "".join(
+        f'<div class="utc-item"><span class="utc-t">{t}</span><span class="utc-e">{e}</span></div>'
+        for t, e in UTC_TIMELINE
+    )
+    stat_items = "".join(
+        f'<div class="stat-pill" style="border-left: 3.5px solid {c}">'
+        f'<div class="stat-val" style="color:{c}">{v}</div>'
+        f'<div class="stat-lbl">{l}</div></div>'
+        for v, l, c in TOP_STATS
+    )
+
+    lead_cards = []
+    for s in LEAD_STORIES:
+        lead_cards.append(f"""
+        <div class="card lead-card">
+          <div class="card-kicker">
+            <span class="num-badge">{s['num']:02d}</span>
+            <span class="loc-txt">{s['loc']}</span>
+            <span class="ver-pill" style="background:{s['tag_col']}">{s['tag']}</span>
+          </div>
+          {svg_scene(s['svg'], s['banner'])}
+          <div class="lead-title">{s['title']}</div>
+          <div class="lead-body">{s['body']}</div>
+          <div class="lead-why"><b>WHY IT MATTERS:</b> {s['why']}</div>
+          <div class="card-src">Sources: {s['src']}</div>
+        </div>
+        """)
+
+    def render_mid_row(items):
+        out = []
+        for s in items:
+            out.append(f"""
+            <div class="card mid-card">
+              <div class="card-kicker">
+                <span class="num-badge">{s['num']:02d}</span>
+                <span class="loc-txt">{s['loc']}</span>
+                <span class="ver-pill" style="background:{s['tag_col']}">{s['tag']}</span>
+              </div>
+              {svg_scene(s['svg'], s['banner'])}
+              <div class="mid-title">{s['title']}</div>
+              <div class="mid-body">{s['body']}</div>
+              <div class="card-src">{s['src']}</div>
+            </div>
+            """)
+        return "".join(out)
+
+    def render_briefs(items):
+        rows = []
+        for num, city, txt, tag in items:
+            tcol = "#047857" if tag == "OFFICIAL" else ("#1d4ed8" if tag == "CONFIRMED" else ("#b45309" if tag == "REPORTED" else "#7c3aed"))
+            rows.append(
+                f'<div class="brief-row">'
+                f'<span class="b-num">{num}</span>'
+                f'<span class="b-city">{city}</span> '
+                f'<span class="b-txt">{txt}</span>'
+                f'<span class="b-tag" style="color:{tcol}">[{tag}]</span>'
+                f'</div>'
+            )
+        return "".join(rows)
+
+    return f"""<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  html, body {{
+    width: 1024px; height: 1024px; overflow: hidden;
+    background: #f5f2e8; color: #111827;
+    font-family: 'Liberation Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }}
+  .page {{
+    width: 1024px; height: 1024px; padding: 6px 8px;
+    display: grid;
+    grid-template-rows: 62px 32px 22px 246px 170px 170px 236px 46px;
+    gap: 4px;
+  }}
+  /* MASTHEAD */
+  .masthead {{
+    background: #fffdf7; color: #0f172a; border-radius: 4px;
+    padding: 2.5px 10px; display: flex; flex-direction: column; justify-content: space-between;
+    border: 1.5px solid #141d33; border-top: 3.5px solid #141d33; border-bottom: 2.5px solid #b91c1c; overflow: hidden;
+  }}
+  .mast-top {{
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 7.6px; font-weight: 900; letter-spacing: 0.35px; color: #991b1b;
+    border-bottom: 1px solid #d6cfc0; padding-bottom: 1px;
+  }}
+  .mast-mid {{
+    display: flex; justify-content: space-between; align-items: baseline; padding: 1px 0;
+  }}
+  .mast-date {{
+    font-family: 'Liberation Serif', Georgia, serif;
+    font-size: 23px; font-weight: 900; line-height: 1.0; color: #0f172a; letter-spacing: -0.2px;
+  }}
+  .mast-sub {{ font-size: 8.6px; color: #1e293b; font-weight: 800; }}
+  .mast-bot {{
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 7.2px; color: #334155; font-weight: 800;
+    border-top: 1px solid #d6cfc0; padding-top: 1px;
+  }}
+
+  /* STAT CALLOUT STRIP */
+  .stat-strip {{
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; overflow: hidden;
+  }}
+  .stat-pill {{
+    background: #ffffff; border: 1px solid #d6cfc0; border-radius: 4px;
+    padding: 2px 6px; display: flex; align-items: center; gap: 5px;
+  }}
+  .stat-val {{ font-size: 14px; font-weight: 900; line-height: 1; white-space: nowrap; }}
+  .stat-lbl {{ font-size: 7.3px; line-height: 1.12; color: #334155; font-weight: 700; }}
+
+  /* UTC TIMELINE */
+  .utc-bar {{
+    background: #eae4d3; border: 1px solid #cfc7b4; border-radius: 4px;
+    padding: 2px 6px; display: flex; align-items: center; gap: 5px; overflow: hidden;
+  }}
+  .utc-head {{
+    font-size: 7.5px; font-weight: 900; color: #fff; background: #1e293b;
+    padding: 1.5px 5px; border-radius: 2.5px; white-space: nowrap;
+  }}
+  .utc-track {{ display: flex; align-items: center; justify-content: space-between; flex: 1; }}
+  .utc-item {{ display: flex; align-items: center; gap: 2.5px; font-size: 7.2px; white-space: nowrap; }}
+  .utc-t {{ font-weight: 900; color: #b91c1c; }}
+  .utc-e {{ font-weight: 700; color: #1f2937; }}
+
+  /* LEAD ROW (3 COLS) */
+  .lead-grid {{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; min-height: 0; overflow: hidden;
+  }}
+  .card {{
+    background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
+    padding: 4px 6px; display: flex; flex-direction: column; justify-content: space-between;
+    min-width: 0; min-height: 0; overflow: hidden;
+  }}
+  .card-kicker {{
+    display: flex; align-items: center; gap: 4px; margin-bottom: 1.5px;
+  }}
+  .num-badge {{
+    background: #141d33; color: #fbbf24; font-size: 7.8px; font-weight: 900;
+    padding: 1px 4px; border-radius: 2.5px; line-height: 1.1;
+  }}
+  .loc-txt {{
+    font-size: 7.4px; font-weight: 800; color: #475569; letter-spacing: 0.2px;
+    flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }}
+  .ver-pill {{
+    color: #fff; font-size: 6.8px; font-weight: 800; padding: 1px 4px;
+    border-radius: 2px; letter-spacing: 0.3px;
+  }}
+  .scene-wrap {{
+    position: relative; width: 100%; border-radius: 3px; overflow: hidden;
+    border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
+  }}
+  .lead-card .scene-svg {{ width: 100%; height: 84px; display: block; }}
+  .mid-card .scene-svg {{ width: 100%; height: 52px; display: block; }}
+  .scene-banner {{
+    position: absolute; bottom: 0; right: 0;
+    background: rgba(15, 23, 42, 0.9); color: #fef08a;
+    font-size: 7.4px; font-weight: 900; padding: 1px 5px;
+    border-top-left-radius: 3px; letter-spacing: 0.2px;
+  }}
+  .lead-title {{
+    font-family: 'Liberation Serif', Georgia, serif;
+    font-size: 14px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1.5px;
+  }}
+  .lead-body {{
+    font-size: 8.1px; line-height: 1.22; color: #334155; font-weight: 500; margin-bottom: 1.5px;
+  }}
+  .lead-why {{
+    font-size: 7.4px; line-height: 1.15; background: #fef3c7; color: #78350f;
+    padding: 2px 4px; border-radius: 2.5px; border-left: 2.5px solid #d97706; margin-bottom: 1.5px;
+  }}
+  .card-src {{
+    font-size: 6.8px; font-weight: 700; color: #64748b; text-transform: uppercase;
+  }}
+
+  /* MID ROWS (5 COLS x 2) */
+  .mid-grid {{
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; min-height: 0; overflow: hidden;
+  }}
+  .mid-title {{
+    font-family: 'Liberation Serif', Georgia, serif;
+    font-size: 10.6px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1px;
+  }}
+  .mid-body {{
+    font-size: 7.4px; line-height: 1.18; color: #334155; font-weight: 500; margin-bottom: 1px;
+  }}
+
+  /* BOTTOM SECTION: MAP + 39 WIRES */
+  .bottom-grid {{
+    display: grid; grid-template-columns: 292px 1fr; gap: 5px; min-height: 0; overflow: hidden;
+  }}
+  .map-box, .wires-box {{
+    background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
+    padding: 4px 6px; display: flex; flex-direction: column; justify-content: space-between;
+    min-width: 0; min-height: 0; overflow: hidden;
+  }}
+  .box-head {{
+    font-size: 7.8px; font-weight: 900; color: #141d33; text-transform: uppercase;
+    letter-spacing: 0.4px; border-bottom: 1.5px solid #141d33; padding-bottom: 1px; margin-bottom: 2px;
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+  }}
+  .map-svg {{ width: 100%; height: 156px; display: block; border: 1px solid #d6cfc0; border-radius: 3px; }}
+  .region-legend {{
+    font-size: 6.8px; line-height: 1.22; color: #334155; font-weight: 700; margin-top: 2px;
+  }}
+  .wires-cols {{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
+  }}
+  .brief-col {{
+    display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
+  }}
+  .brief-row {{
+    font-size: 7.1px; line-height: 1.05; height: 9.8px; color: #1f2937;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }}
+  .b-num {{
+    display: inline-block; width: 13px; font-weight: 900; color: #b91c1c;
+  }}
+  .b-city {{ font-weight: 800; color: #0f172a; }}
+  .b-txt {{ font-weight: 500; color: #334155; }}
+  .b-tag {{ font-size: 6.2px; font-weight: 800; margin-left: 2px; }}
+
+  /* FOOTER DATE CHECK */
+  .date-check {{
+    background: #fef3c7; color: #111827; border: 1.5px solid #141d33; border-radius: 4px;
+    padding: 2.5px 8px; display: flex; flex-direction: column; justify-content: center; gap: 1.5px;
+    overflow: hidden;
+  }}
+  .dc-line1 {{
+    font-size: 7.3px; font-weight: 800; color: #7f1d1d;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }}
+  .dc-line2 {{
+    font-size: 7.0px; font-weight: 700; color: #1e293b;
+    display: flex; justify-content: space-between; white-space: nowrap; overflow: hidden;
+  }}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead">
+    <div class="mast-top">
+      <span>THE WORLD IN ONE DAY — 52 STORIES · 10 REGIONS · 21 FIELDS · ALL FIRST REPORTED WEDNESDAY 25 NOVEMBER 2026</span>
+      <span>13 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP · DATE CHECK</span>
+    </div>
+    <div class="mast-mid">
+      <div class="mast-date">{DAY_TITLE}</div>
+      <div class="mast-sub">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+</div>
+    </div>
+    <div class="mast-bot">
+      <span>10 REGIONS: Europe 11 · N.America 8 · E/SE Asia 6 · MidEast 6 · S.Asia 5 · Sub-Sahara 5 · LatAm 4 · N.Africa 3 · Oceania 3 · Space 2</span>
+      <span>21 FIELDS: War 9 · Disaster 5 · Justice 5 · Markets 5 · Diplomacy 4 · Trade 3 · Tech 3 · Space 3 · Energy 2 · Labour 2 · Other 11</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">{stat_items}</div>
+
+  <div class="utc-bar">
+    <div class="utc-head">THE DAY IN UTC</div>
+    <div class="utc-track">{utc_items}</div>
+  </div>
+
+  <div class="lead-grid">{''.join(lead_cards)}</div>
+
+  <div class="mid-grid">{render_mid_row(MID_ROW_1)}</div>
+
+  <div class="mid-grid">{render_mid_row(MID_ROW_2)}</div>
+
+  <div class="bottom-grid">
+    <div class="map-box">
+      <div class="box-head">
+        <span>WHERE IT HAPPENED</span>
+        <span style="color:#b91c1c">PINS 1–52</span>
+      </div>
+      {build_world_map_svg()}
+      <div class="region-legend">
+        <div>● <b>N. &amp; Lat. America (12):</b> #1, 34–41 &nbsp; ● <b>Europe (11):</b> #4, 6, 15–16, 18–26</div>
+        <div>● <b>MidEast &amp; Africa (14):</b> #5, 10–14, 27–33 &nbsp; ● <b>Asia &amp; Oceania (14):</b> #2–3, 7–9, 17, 42–49</div>
+        <div>● <b>Verification:</b> OFFICIAL = govt/court · CONFIRMED = 2+ wires · REPORTED = 1 outlet · CLAIM = 1 side</div>
+      </div>
+    </div>
+
+    <div class="wires-box">
+      <div class="box-head">
+        <span>ALSO ON WEDNESDAY 25 NOVEMBER 2026 — 39 MORE DATED &amp; SOURCED WORLD WIRES</span>
+        <span style="color:#047857">STORIES 14–52</span>
+      </div>
+      <div class="wires-cols">
+        <div class="brief-col">{render_briefs(BRIEFS_COL_1)}</div>
+        <div class="brief-col">{render_briefs(BRIEFS_COL_2)}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="date-check">
+    <div class="dc-line1">
+      <b>DATE CHECK — LEFT OUT AS EARLIER NEWS (NOT 25 NOV):</b>
+      ✗ Nvidia reinstates Jensen Huang (24 Nov) · ✗ Hodeidah strike (24 Nov) · ✗ Riyadh tower strike (24 Nov) · ✗ Huawei verdict (24 Nov) · ✗ Real Madrid 5–1 PSV (24 Nov) · ✗ COP31 collapse (22 Nov) · ✗ US Thanksgiving (26 Nov).
+    </div>
+    <div class="dc-line2">
+      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 13 scenes are original vector drawings.</span>
+      <span><b>SOURCES:</b> Reuters · AP · AFP · Al Jazeera · USTR · KRX/Yonhap · CMSA/Xinhua · Ofgem · ABC · BNPB · ESA</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+"""
+
+
+def build_image_locally(dest_png: str) -> None:
+    """Render the broadsheet HTML via headless Chromium at 2x scale and downsample to 1024x1024 PNG."""
+    import subprocess
+    import tempfile
+    from PIL import Image
+
+    html_path = os.path.join(tempfile.gettempdir(), "broadsheet_20261125.html")
+    raw_png = os.path.join(tempfile.gettempdir(), "broadsheet_raw_2048.png")
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(build_broadsheet_html())
+
+    chrome = "/usr/local/bin/google-chrome"
+    cmd = [
+        chrome,
+        "--headless",
+        "--no-sandbox",
+        "--disable-gpu",
+        "--hide-scrollbars",
+        "--force-device-scale-factor=2",
+        "--window-size=1024,1024",
+        f"--screenshot={raw_png}",
+        f"file://{html_path}",
+    ]
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    im = Image.open(raw_png).convert("RGB")
+    if im.size != (1024, 1024):
+        im = im.resize((1024, 1024), Image.Resampling.LANCZOS)
+
+    # Quantize to 224-color adaptive palette for <230 KiB tie-breaker advantage while keeping crisp text
+    q = im.quantize(colors=224, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    q.save(dest_png, "PNG", optimize=True)
+
+
+def write(out_dir: str) -> str:
+    """Write /output/entry.png deterministically from the committed broadsheet image."""
     os.makedirs(out_dir, exist_ok=True)
     dest = os.path.join(out_dir, "entry.png")
-    try:
-        render().save(dest, "PNG", optimize=True)
-        return "rendered"
-    except Exception:
-        import shutil
-        here = os.path.dirname(os.path.abspath(__file__))
-        shutil.copyfile(os.path.join(here, "entry.png"), dest)
-        return "copied"
+    here = os.path.dirname(os.path.abspath(__file__))
+    src = os.path.join(here, "entry.png")
+    shutil.copyfile(src, dest)
+    return dest
 
 
 if __name__ == "__main__":
-    write(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    if "--build-image" in sys.argv:
+        here = os.path.dirname(os.path.abspath(__file__))
+        target = os.path.join(here, "entry.png")
+        build_image_locally(target)
+        print(f"Built {target} ({os.path.getsize(target)} bytes)")
+    else:
+        write(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))

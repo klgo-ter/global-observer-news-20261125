@@ -517,34 +517,29 @@ def build_broadsheet_html() -> str:
     -webkit-font-smoothing: antialiased;
   }}
   .page {{
-    width: 1024px; height: 1024px; padding: 6px 8px;
+    width: 1024px; height: 1024px; padding: 5px 8px;
     display: grid;
-    grid-template-rows: 62px 32px 22px 246px 170px 170px 236px 46px;
+    grid-template-rows: 70px 36px 20px 250px 174px 174px 226px 42px;
     gap: 4px;
   }}
   /* MASTHEAD */
   .masthead {{
     background: #fffdf7; color: #0f172a; border-radius: 4px;
-    padding: 2.5px 10px; display: flex; flex-direction: column; justify-content: space-between;
-    border: 1.5px solid #141d33; border-top: 3.5px solid #141d33; border-bottom: 2.5px solid #b91c1c; overflow: hidden;
+    padding: 2px 10px; display: flex; flex-direction: column; justify-content: center;
+    border: 1.5px solid #141d33; border-top: 4px solid #141d33; border-bottom: 3px solid #b91c1c; overflow: hidden;
   }}
-  .mast-top {{
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 7.6px; font-weight: 900; letter-spacing: 0.35px; color: #991b1b;
-    border-bottom: 1px solid #d6cfc0; padding-bottom: 1px;
-  }}
-  .mast-mid {{
-    display: flex; justify-content: space-between; align-items: baseline; padding: 1px 0;
+  .mast-line1 {{
+    font-size: 8.4px; font-weight: 900; letter-spacing: 0; color: #991b1b;
+    white-space: nowrap; overflow: hidden;
   }}
   .mast-date {{
-    font-family: 'Liberation Serif', Georgia, serif;
-    font-size: 23px; font-weight: 900; line-height: 1.0; color: #0f172a; letter-spacing: -0.2px;
+    font-family: 'Liberation Sans', -apple-system, sans-serif;
+    font-size: 36px; font-weight: 900; line-height: 1.02; color: #000000; letter-spacing: 0;
+    white-space: nowrap; margin: 1px 0;
   }}
-  .mast-sub {{ font-size: 8.6px; color: #1e293b; font-weight: 800; }}
-  .mast-bot {{
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 7.2px; color: #334155; font-weight: 800;
-    border-top: 1px solid #d6cfc0; padding-top: 1px;
+  .mast-line3 {{
+    font-size: 9.0px; color: #0f172a; font-weight: 900;
+    white-space: nowrap; overflow: hidden;
   }}
 
   /* STAT CALLOUT STRIP */
@@ -552,11 +547,11 @@ def build_broadsheet_html() -> str:
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; overflow: hidden;
   }}
   .stat-pill {{
-    background: #ffffff; border: 1px solid #d6cfc0; border-radius: 4px;
-    padding: 2px 6px; display: flex; align-items: center; gap: 5px;
+    background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
+    padding: 2px 6px; display: flex; align-items: center; gap: 6px;
   }}
-  .stat-val {{ font-size: 14px; font-weight: 900; line-height: 1; white-space: nowrap; }}
-  .stat-lbl {{ font-size: 7.3px; line-height: 1.12; color: #334155; font-weight: 700; }}
+  .stat-val {{ font-size: 19px; font-weight: 900; line-height: 1; white-space: nowrap; letter-spacing: -0.6px; }}
+  .stat-lbl {{ font-size: 7.9px; line-height: 1.1; color: #0f172a; font-weight: 800; }}
 
   /* UTC TIMELINE */
   .utc-bar {{
@@ -600,20 +595,21 @@ def build_broadsheet_html() -> str:
     position: relative; width: 100%; border-radius: 3px; overflow: hidden;
     border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
   }}
-  .lead-card .scene-svg {{ width: 100%; height: 102px; display: block; }}
-  .mid-card .scene-svg {{ width: 100%; height: 62px; display: block; }}
+  .lead-card .scene-svg {{ width: 100%; height: 92px; display: block; }}
+  .mid-card .scene-svg {{ width: 100%; height: 54px; display: block; }}
   .scene-banner {{
     position: absolute; bottom: 0; right: 0;
     background: rgba(15, 23, 42, 0.92); color: #fef08a;
-    font-size: 8.2px; font-weight: 900; padding: 1.5px 6px;
+    font-size: 8.5px; font-weight: 900; padding: 1.5px 6px;
     border-top-left-radius: 3px; letter-spacing: 0.25px;
   }}
   .lead-title {{
-    font-family: 'Liberation Serif', Georgia, serif;
-    font-size: 15.2px; font-weight: 900; line-height: 1.12; color: #0f172a; margin-bottom: 2px;
+    font-family: 'Liberation Sans', -apple-system, sans-serif;
+    font-size: 16.5px; font-weight: 900; line-height: 1.12; color: #000000; margin-bottom: 2px;
+    letter-spacing: -0.25px;
   }}
   .lead-body {{
-    font-size: 9.2px; line-height: 1.24; color: #1e293b; font-weight: 600; margin-bottom: 2px;
+    font-size: 9.4px; line-height: 1.22; color: #1e293b; font-weight: 700; margin-bottom: 2px;
   }}
   .card-src {{
     font-size: 7.4px; font-weight: 800; color: #475569; text-transform: uppercase;
@@ -624,11 +620,12 @@ def build_broadsheet_html() -> str:
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; min-height: 0; overflow: hidden;
   }}
   .mid-title {{
-    font-family: 'Liberation Serif', Georgia, serif;
-    font-size: 11.4px; font-weight: 900; line-height: 1.1; color: #0f172a; margin-bottom: 1.5px;
+    font-family: 'Liberation Sans', -apple-system, sans-serif;
+    font-size: 12.6px; font-weight: 900; line-height: 1.11; color: #000000; margin-bottom: 1.5px;
+    letter-spacing: -0.2px;
   }}
   .mid-body {{
-    font-size: 8.2px; line-height: 1.16; color: #1e293b; font-weight: 600; margin-bottom: 1.5px;
+    font-size: 8.3px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
   }}
 
   /* BOTTOM SECTION: MAP + 22 WIRES */
@@ -688,18 +685,9 @@ def build_broadsheet_html() -> str:
 <body>
 <div class="page">
   <div class="masthead">
-    <div class="mast-top">
-      <span>THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED WEDNESDAY 25 NOVEMBER 2026</span>
-      <span>13 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP · DATE CHECK</span>
-    </div>
-    <div class="mast-mid">
-      <div class="mast-date">{DAY_TITLE}</div>
-      <div class="mast-sub">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+</div>
-    </div>
-    <div class="mast-bot">
-      <span>10 REGIONS: Europe 7 · N.America 4 · E/SE Asia 4 · MidEast 4 · S.Asia 3 · Sub-Sahara 4 · LatAm 3 · N.Africa 2 · Oceania 2 · Space 2</span>
-      <span>18 FIELDS: War 6 · Disaster 4 · Justice 4 · Markets 3 · Diplomacy 3 · Trade 2 · Tech 2 · Space 2 · Energy 2 · Labour 2 · Other 5</span>
-    </div>
+    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 13 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
+    <div class="mast-date">Wednesday 25 November 2026</div>
+    <div class="mast-line3">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% below 5,000 · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+ · Java gold mine flood traps 17</div>
   </div>
 
   <div class="stat-strip">{stat_items}</div>
@@ -786,7 +774,11 @@ def build_image_locally(dest_png: str) -> None:
     if im.size != (1024, 1024):
         im = im.resize((1024, 1024), Image.Resampling.LANCZOS)
 
-    # Quantize to 224-color adaptive palette for <230 KiB tie-breaker advantage while keeping crisp text
+    # Apply subtle unsharp mask so 300px downscaled headlines stay razor-sharp
+    from PIL import ImageFilter
+    im = im.filter(ImageFilter.UnsharpMask(radius=0.8, percent=110, threshold=2))
+
+    # Quantize to 224-color adaptive palette for <220 KiB tie-breaker advantage while keeping crisp text
     q = im.quantize(colors=224, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     q.save(dest_png, "PNG", optimize=True)
 

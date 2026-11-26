@@ -664,7 +664,7 @@ def build_broadsheet_html() -> str:
       Nvidia/Jensen Huang (24 Nov) · Hodeidah strike (24 Nov) · Riyadh tower (24 Nov) · Huawei verdict (24 Nov) · Real Madrid 5–1 PSV (24 Nov) · COP31 (22 Nov).
     </div>
     <div class="dc-line2">
-      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 9 scenes are original vector drawings.</span>
+      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 6 scenes are original vector drawings.</span>
       <span><b>SOURCES:</b> Reuters · AP · AFP · Al Jazeera · USTR · KRX/Yonhap · CMSA/Xinhua · Ofgem · ABC · BNPB · ESA</span>
     </div>
   </div>

@@ -72,7 +72,7 @@ LEAD_STORIES = [
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "SHENZHOU-24 · DOCKED 03:56 UTC",
-        "title": "Pakistan astronaut docks at Tiangong",
+        "title": "Astronaut docks at Tiangong station",
         "body": "Zeeshan Ali, 40, first foreigner aboard the station.",
         "src": "CMSA · Xinhua · AP",
         "svg": "space",
@@ -97,7 +97,7 @@ MID_ROW_1 = [
         "tag": "CONFIRMED",
         "tag_col": "#1d4ed8",
         "banner": "4 DRONES DOWN · HODEIDAH",
-        "title": "Saudis down Houthi drones after Hodeidah strike",
+        "title": "Saudis down Houthi drones after port strike",
         "body": "4 drones destroyed over Ras Tanura refinery after Hodeidah port hit.",
         "src": "SPA · Reuters",
         "svg": "drones",
@@ -113,20 +113,20 @@ MID_ROW_1 = [
         "src": "Ofgem · BBC · FT",
         "svg": "energy",
     },
+]
+
+MID_ROW_2 = [
     {
         "num": 7,
         "loc": "CANBERRA · DIPLOMACY",
         "tag": "OFFICIAL",
         "tag_col": "#047857",
         "banner": "A$740M · NO FOREIGN BASES",
-        "title": "Solomon Islands signs security pact with Australia",
-        "body": "10-year A$740m treaty makes Australia primary partner; bars bases.",
+        "title": "Solomon Islands signs Australia security pact",
+        "body": "10-year A$740m treaty makes Australia primary partner; bars foreign bases.",
         "src": "ABC · Reuters",
         "svg": "treaty",
     },
-]
-
-MID_ROW_2 = [
     {
         "num": 8,
         "loc": "DHAKA · LABOUR",
@@ -134,7 +134,7 @@ MID_ROW_2 = [
         "tag_col": "#047857",
         "banner": "TK 12,500 → 17,000 (+36%)",
         "title": "Bangladesh garment wage up 36% to Tk 17,000",
-        "body": "Board votes 4–2; unions reject as 87 plants shut.",
+        "body": "Board votes 4–2; unions reject the figure as 87 plants shut.",
         "src": "Daily Star · Reuters",
         "svg": "garment",
     },
@@ -145,35 +145,15 @@ MID_ROW_2 = [
         "tag_col": "#047857",
         "banner": "9 DEAD · 17 TRAPPED (100M)",
         "title": "9 dead, 17 trapped in flooded Java mine",
-        "body": "Flash flood fills 100m illegal pit in West Java.",
+        "body": "Flash flood fills an illegal 100m pit in West Java; rescuers dig.",
         "src": "BNPB · Antara · AP",
         "svg": "mine",
-    },
-    {
-        "num": 10,
-        "loc": "GIZA, CAIRO · DISASTER",
-        "tag": "OFFICIAL",
-        "tag_col": "#047857",
-        "banner": "30+ KILLED · 27 CARS BURNED",
-        "title": "Cairo tanker blast kills at least 30",
-        "body": "Tanker overturns and explodes on ring road; 18 hurt.",
-        "src": "Health Min · AP · AFP",
-        "svg": "tanker",
-    },
-    {
-        "num": 11,
-        "loc": "GAZA CITY · WAR",
-        "tag": "REPORTED",
-        "tag_col": "#b45309",
-        "banner": "SHATI CAMP · SECURITY CHIEF",
-        "title": "Israeli strike kills Hamas security chief",
-        "body": "Col. Abu al-Awf, wife and two daughters die in al-Shati.",
-        "src": "AP · Al Jazeera",
-        "svg": "gaza",
     },
 ]
 
 BRIEFS_COL_1 = [
+    (10, "Giza, Cairo", "Tanker blast on ring road kills at least 30", "OFFICIAL"),
+    (11, "Gaza City", "Strike kills Hamas security chief in al-Shati", "REPORTED"),
     (12, "Cape Town", "Court voids Phala Phala report against Ramaphosa", "OFFICIAL"),
     (13, "Jerusalem", "Judges doubt Netanyahu bribery count", "CONFIRMED"),
     (14, "Hormuz", "Iran IRGC: 2 tankers hit mines off Hormuz", "CLAIM"),
@@ -185,10 +165,10 @@ BRIEFS_COL_1 = [
     (20, "Paris", "Eurostar walkout cancels Channel trains", "CONFIRMED"),
     (21, "Ed Damazin", "RSF drone strikes kill 19 in Sudan Blue Nile", "CONFIRMED"),
     (22, "Lagos", "Police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
-    (23, "Harare", "Court issues arrest warrant for Mugabe's son", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
+    (23, "Harare", "Court issues arrest warrant for Mugabe's son", "OFFICIAL"),
     (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget", "OFFICIAL"),
     (25, "New York", "Wall St mixed: Dow +0.3%, Nasdaq -0.6%", "OFFICIAL"),
     (26, "Washington", "FCC clears SpaceX 1m orbital data nodes", "OFFICIAL"),
@@ -499,7 +479,7 @@ def build_broadsheet_html() -> str:
   .page {{
     width: 1024px; height: 1024px; padding: 5px 8px;
     display: grid;
-    grid-template-rows: 80px 36px 20px 250px 172px 172px 214px 42px;
+    grid-template-rows: 80px 36px 20px 220px 220px 220px 148px 40px;
     gap: 4px;
   }}
   /* MASTHEAD */
@@ -575,8 +555,8 @@ def build_broadsheet_html() -> str:
     position: relative; width: 100%; border-radius: 3px; overflow: hidden;
     border: 1px solid #cbd5e1; margin-bottom: 2px; flex-shrink: 0;
   }}
-  .lead-card .scene-svg {{ width: 100%; height: 88px; display: block; }}
-  .mid-card .scene-svg {{ width: 100%; height: 58px; display: block; }}
+  .lead-card .scene-svg {{ width: 100%; height: 84px; display: block; }}
+  .mid-card .scene-svg {{ width: 100%; height: 96px; display: block; }}
   .scene-banner {{
     position: absolute; bottom: 0; right: 0;
     background: rgba(15, 23, 42, 0.92); color: #fef08a;
@@ -597,45 +577,44 @@ def build_broadsheet_html() -> str:
 
   /* MID ROWS (5 COLS x 2) */
   .mid-grid {{
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; min-height: 0; overflow: hidden;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; min-height: 0; overflow: hidden;
   }}
   .mid-title {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 19px; font-weight: 900; line-height: 1.08; color: #000000; margin-bottom: 1.5px;
-    letter-spacing: -0.4px;
+    font-size: 25px; font-weight: 900; line-height: 1.08; color: #000000; margin-bottom: 2px;
+    letter-spacing: -0.6px;
   }}
   .mid-body {{
-    font-size: 9.6px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
+    font-size: 10.4px; line-height: 1.18; color: #1e293b; font-weight: 700; margin-bottom: 1px;
   }}
 
   /* BOTTOM SECTION: MAP + 22 WIRES */
   .bottom-grid {{
-    display: grid; grid-template-columns: 292px 1fr; gap: 5px; min-height: 0; overflow: hidden;
+    display: grid; grid-template-columns: 258px 1fr; gap: 5px; min-height: 0; overflow: hidden;
   }}
   .map-box, .wires-box {{
     background: #ffffff; border: 1px solid #cfc7b4; border-radius: 4px;
-    padding: 4px 6px; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 3px 5px; display: flex; flex-direction: column; justify-content: space-between;
     min-width: 0; min-height: 0; overflow: hidden;
   }}
   .box-head {{
-    font-size: 8.4px; font-weight: 900; color: #141d33; text-transform: uppercase;
-    letter-spacing: 0.4px; border-bottom: 1.5px solid #141d33; padding-bottom: 1.5px; margin-bottom: 3px;
+    font-size: 7.6px; font-weight: 900; color: #141d33; text-transform: uppercase;
+    letter-spacing: 0.3px; border-bottom: 1.5px solid #141d33; padding-bottom: 1px; margin-bottom: 2px;
     display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
   }}
-  .map-svg {{ width: 100%; height: 152px; display: block; border: 1px solid #d6cfc0; border-radius: 3px; }}
+  .map-svg {{ width: 100%; height: 82px; display: block; border: 1px solid #d6cfc0; border-radius: 3px; }}
   .region-legend {{
-    font-size: 7.3px; line-height: 1.25; color: #1e293b; font-weight: 700; margin-top: 2px;
+    font-size: 6.4px; line-height: 1.18; color: #1e293b; font-weight: 700; margin-top: 1px;
   }}
   .wires-cols {{
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7px; flex: 1; min-height: 0; min-width: 0; overflow: hidden;
   }}
   .brief-col {{
     display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
   }}
   .brief-row {{
-    font-size: 9.2px; line-height: 1.15; height: 15.5px; color: #0f172a;
+    font-size: 9.4px; line-height: 1.1; height: 10.2px; color: #0f172a;
     white-space: nowrap; overflow: hidden;
-    border-bottom: 1px solid #eef2f7;
     display: flex; align-items: center; justify-content: space-between;
   }}
   .b-left {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
@@ -665,7 +644,7 @@ def build_broadsheet_html() -> str:
 <body>
 <div class="page">
   <div class="masthead">
-    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 11 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
+    <div class="mast-line1">THE WORLD IN ONE DAY — 35 STORIES · 10 REGIONS · 18 FIELDS · ALL FIRST REPORTED ON WEDNESDAY 25 NOVEMBER 2026 · 9 ORIGINAL DRAWN SCENES · UTC TIMELINE · WORLD MAP</div>
     <div class="mast-date">Wednesday 25 November 2026</div>
     <div class="mast-line3">US proposes tariffs up to 35% on 14 economies · AI doubts sink Kospi -6.2% below 5,000 · Pakistan's first astronaut docks at Tiangong · Cairo tanker fire kills 30+ · Java gold mine flood traps 17</div>
   </div>
@@ -716,7 +695,7 @@ def build_broadsheet_html() -> str:
       Nvidia/Jensen Huang (24 Nov) · Hodeidah strike (24 Nov) · Riyadh tower (24 Nov) · Huawei verdict (24 Nov) · Real Madrid 5–1 PSV (24 Nov) · COP31 (22 Nov).
     </div>
     <div class="dc-line2">
-      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 11 scenes are original vector drawings.</span>
+      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 9 scenes are original vector drawings.</span>
       <span><b>SOURCES:</b> Reuters · AP · AFP · Al Jazeera · USTR · KRX/Yonhap · CMSA/Xinhua · Ofgem · ABC · BNPB · ESA</span>
     </div>
   </div>

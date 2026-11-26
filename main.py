@@ -175,32 +175,32 @@ MID_ROW_2 = [
 
 BRIEFS_COL_1 = [
     (12, "Cape Town", "Court voids Phala Phala report against Ramaphosa", "OFFICIAL"),
-    (13, "Jerusalem", "Judges doubt Netanyahu bribery count in Case 4000", "CONFIRMED"),
-    (14, "Hormuz", "Iran IRGC says 2 tankers hit mines on 'unauthorised route'", "CLAIM"),
-    (15, "Samara", "Ukrainian drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
-    (16, "Pyongyang", "North Korea gives Swiss envoy 48h to shut office & leave", "OFFICIAL"),
-    (17, "Brussels", "EU Commission proposes €50bn fund for quantum technology", "OFFICIAL"),
-    (18, "London", "Poundland enters administration; 11,000 UK jobs at risk", "CONFIRMED"),
-    (19, "Kyiv", "Zelensky says Ukraine needs €115bn external aid for 2027", "OFFICIAL"),
-    (20, "Paris", "Surprise Eurostar walkout cancels cross-Channel trains", "CONFIRMED"),
-    (21, "Ed Damazin", "RSF drone strikes kill 19 civilians in Sudan Blue Nile", "CONFIRMED"),
-    (22, "Lagos", "Nigeria police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
-    (23, "Harare", "Zimbabwe court issues arrest warrant for Mugabe's son", "OFFICIAL"),
+    (13, "Jerusalem", "Judges doubt Netanyahu bribery count", "CONFIRMED"),
+    (14, "Hormuz", "Iran IRGC: 2 tankers hit mines off Hormuz", "CLAIM"),
+    (15, "Samara", "Drones set Syzran & Kuibyshev refineries ablaze", "CONFIRMED"),
+    (16, "Pyongyang", "N Korea gives Swiss envoy 48h to leave", "OFFICIAL"),
+    (17, "Brussels", "EU proposes €50bn quantum technology fund", "OFFICIAL"),
+    (18, "London", "Poundland collapse puts 11,000 UK jobs at risk", "CONFIRMED"),
+    (19, "Kyiv", "Zelensky: Ukraine needs €115bn aid for 2027", "OFFICIAL"),
+    (20, "Paris", "Eurostar walkout cancels Channel trains", "CONFIRMED"),
+    (21, "Ed Damazin", "RSF drone strikes kill 19 in Sudan Blue Nile", "CONFIRMED"),
+    (22, "Lagos", "Police arrest 5 Mexicans, seize $220m meth lab", "OFFICIAL"),
+    (23, "Harare", "Court issues arrest warrant for Mugabe's son", "OFFICIAL"),
 ]
 
 BRIEFS_COL_2 = [
-    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget after ₦5.2tn cut", "OFFICIAL"),
-    (25, "New York", "Wall St pares losses: Dow +0.3%, Nasdaq -0.6%; GDP +4.3%", "OFFICIAL"),
-    (26, "Washington", "FCC clears SpaceX plan for 1 million orbital data nodes", "OFFICIAL"),
-    (27, "Iowa", "US Army detonates 10,000 lb of lead azide at ammo plant", "OFFICIAL"),
-    (28, "Cartagena", "Colombia police free 20 supermarket hostages; 1 captor dead", "OFFICIAL"),
-    (29, "Paraná", "Severe storms kill 6 and hit 40 towns in southern Brazil", "OFFICIAL"),
-    (30, "Sydney", "Australia Oct CPI hits 4.9%; ex-cop Lamarre-Condon guilty", "OFFICIAL"),
-    (31, "Kuala Lumpur", "Malaysia sues Google for RM600m ($146m) over YouTube ads", "OFFICIAL"),
-    (32, "Hong Kong", "URBTIX ticketing breach exposes data of 1.3m customers", "OFFICIAL"),
-    (33, "Karachi", "Residential building collapse kills 3 and injures 14", "CONFIRMED"),
-    (34, "Deep Space", "ESA Hera probe images stadium-sized DART asteroid crater", "OFFICIAL"),
-    (35, "Lisbon", "Champions League: Sporting CP draw 2–2 with Man United", "OFFICIAL"),
+    (24, "Abuja", "Tinubu proposes ₦66.18tn 2026 budget", "OFFICIAL"),
+    (25, "New York", "Wall St mixed: Dow +0.3%, Nasdaq -0.6%", "OFFICIAL"),
+    (26, "Washington", "FCC clears SpaceX 1m orbital data nodes", "OFFICIAL"),
+    (27, "Iowa", "Army detonates 10,000 lb of lead azide", "OFFICIAL"),
+    (28, "Cartagena", "Police free 20 supermarket hostages", "OFFICIAL"),
+    (29, "Paraná", "Storms kill 6, hit 40 towns in south Brazil", "OFFICIAL"),
+    (30, "Sydney", "CPI 4.9%; Lamarre-Condon found guilty", "OFFICIAL"),
+    (31, "Kuala Lumpur", "Malaysia sues Google for RM600m over YouTube", "OFFICIAL"),
+    (32, "Hong Kong", "URBTIX breach exposes 1.3m users' data", "OFFICIAL"),
+    (33, "Karachi", "Building collapse kills 3, injures 14", "CONFIRMED"),
+    (34, "Deep Space", "Hera images stadium-sized DART crater", "OFFICIAL"),
+    (35, "Lisbon", "Sporting CP 2–2 Man United in Champions League", "OFFICIAL"),
 ]
 
 
@@ -601,11 +601,11 @@ def build_broadsheet_html() -> str:
   }}
   .mid-title {{
     font-family: 'Liberation Sans', -apple-system, sans-serif;
-    font-size: 17px; font-weight: 900; line-height: 1.1; color: #000000; margin-bottom: 1.5px;
-    letter-spacing: -0.3px;
+    font-size: 19px; font-weight: 900; line-height: 1.08; color: #000000; margin-bottom: 1.5px;
+    letter-spacing: -0.4px;
   }}
   .mid-body {{
-    font-size: 9.2px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
+    font-size: 9.6px; line-height: 1.15; color: #1e293b; font-weight: 700; margin-bottom: 1px;
   }}
 
   /* BOTTOM SECTION: MAP + 22 WIRES */
@@ -633,9 +633,9 @@ def build_broadsheet_html() -> str:
     display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 0; overflow: hidden;
   }}
   .brief-row {{
-    font-size: 7.75px; line-height: 1.25; height: 15.5px; color: #0f172a;
+    font-size: 9.2px; line-height: 1.15; height: 15.5px; color: #0f172a;
     white-space: nowrap; overflow: hidden;
-    border-bottom: 1px dotted #e2e8f0;
+    border-bottom: 1px solid #eef2f7;
     display: flex; align-items: center; justify-content: space-between;
   }}
   .b-left {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
@@ -712,11 +712,11 @@ def build_broadsheet_html() -> str:
 
   <div class="date-check">
     <div class="dc-line1">
-      <b>DATE CHECK — LEFT OUT AS EARLIER NEWS (NOT 25 NOV):</b>
-      ✗ Nvidia reinstates Jensen Huang (24 Nov) · ✗ Hodeidah strike (24 Nov) · ✗ Riyadh tower strike (24 Nov) · ✗ Huawei verdict (24 Nov) · ✗ Real Madrid 5–1 PSV (24 Nov) · ✗ COP31 collapse (22 Nov) · ✗ US Thanksgiving (26 Nov).
+      <b>DATE CHECK — NOT 25 NOV, LEFT OUT:</b>
+      Nvidia/Jensen Huang (24 Nov) · Hodeidah strike (24 Nov) · Riyadh tower (24 Nov) · Huawei verdict (24 Nov) · Real Madrid 5–1 PSV (24 Nov) · COP31 (22 Nov).
     </div>
     <div class="dc-line2">
-      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 13 scenes are original vector drawings.</span>
+      <span>Every story above happened or was first reported on Wednesday 25 November 2026. All 11 scenes are original vector drawings.</span>
       <span><b>SOURCES:</b> Reuters · AP · AFP · Al Jazeera · USTR · KRX/Yonhap · CMSA/Xinhua · Ofgem · ABC · BNPB · ESA</span>
     </div>
   </div>
